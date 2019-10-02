@@ -1,0 +1,6 @@
+1. Fold in half
+2. Fold two corners along the short side into the center fold
+3. Fold hypotenuse of triangle formed by 2 into the center fold
+4. Fold in half
+5. Fold hypotenuse down to long edge
+6. Repeat on other side
