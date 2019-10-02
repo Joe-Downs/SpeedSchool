@@ -1,2 +1,2 @@
-# ENGR110
-Notes, programs, etc.
+# ENGR 110
+Repository to store and sync all class activities, notes, homeworks, and other ENGR 110 related items.
