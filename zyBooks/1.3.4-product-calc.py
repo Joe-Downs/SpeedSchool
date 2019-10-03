@@ -13,4 +13,3 @@ for entry in numbers_array:
     product *= entry
 
 print("The product is: " + str(product))
-                            
