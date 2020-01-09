@@ -1,6 +1,6 @@
-#CECS 130 Labs
+# CECS 130 Labs
 
-###Formatting
+### Formatting
 **Source File Comment**
 ```
 Name:
