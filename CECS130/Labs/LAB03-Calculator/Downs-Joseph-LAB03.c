@@ -83,7 +83,7 @@ int main()
   int user_choice; 
   do
     {
-      int user_choice = menu_prompt();
+      user_choice = menu_prompt();
       switch (user_choice)
 	{
 	case 1: /* Option 1, Addition */
