@@ -89,8 +89,15 @@ int main()
 
   void division()
   {
-    float quotient = num1 / num2;
-    printf("%.2f / %.2f = %.2f\n", num1, num2, quotient);
+    if (num2 == 0)
+      {
+	printf("ERROR: Divide by Zero\n");
+      }
+    else
+      {
+	float quotient = num1 / num2;
+	printf("%.2f / %.2f = %.2f\n", num1, num2, quotient);
+      }
     printf("\n");
   }
   
