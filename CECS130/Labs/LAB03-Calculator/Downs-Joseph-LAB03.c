@@ -15,24 +15,25 @@ void addition();
 void subtraction();
 void multiplication();
 void division();
-void modulus();
+void modulo();
 void primality_test();
 
 int main()
 {
+  int user_input;
+  int user_choice;
   /* 
    * A functuin which outputs main program menu and prompts user for their choice.
    * Takes no inputs and returns the user's number choice as type char.
    */
   int menu_prompt()
   {
-    int user_input;
     printf("Calculator Menu:\n");
     printf("(1)\tAddition\n");
     printf("(2)\tSubtraction\n");
     printf("(3)\tMultiplication\n");
     printf("(4)\tDivision\n");
-    printf("(5)\tModulus\t\t(Integers)\n");
+    printf("(5)\tModulo\t\t(Integers)\n");
     printf("(6)\tPrimality Test\t(Integers)\n");
     printf("(7)\tExit\n");
     printf("\n");
@@ -42,11 +43,13 @@ int main()
   }  
   float num1;
   float num2;
+  int inum1;
+  int inum2;
   
   /* 
    * operation_header() uses a pre-defined string variable, and prints out a
    * header declaring the operation, and prompts the user for two numbers.
-   * Applicable for addition, subtraction, division, multiplication, and modulus.
+   * Applicable for addition, subtraction, division, multiplication, and modulo.
    */
   void operation_header(int inputs)
   {
@@ -54,14 +57,28 @@ int main()
     if (inputs == 2)
       {
 	printf("Enter your first number: ");
-	scanf("%f", &num1);
+	if (user_input == 5) /* Prompts user for int if modulo */
+	  {
+	    scanf("%i", &inum1);
+	  }
+	else
+	  {
+	    scanf("%f", &num1);
+	  }
 	printf("Enter your second number: ");
-	scanf("%f", &num2);
+	if (user_input == 5) /* Prompts user for int if modulo */
+	  {
+	    scanf("%i", &inum2);
+	  }
+	else
+	  {
+	    scanf("%f", &num2);
+	  }
       }
-    else
+    else /* Only need one number for primality test */
       {
 	printf("Enter the number to test: ");
-	scanf("%f", &num1);
+	scanf("%i", &inum1);
       }
     printf("\n");
   }
@@ -100,8 +117,22 @@ int main()
       }
     printf("\n");
   }
+
+  void modulo()
+  {
+    if (inum2 == 0)
+      {
+	printf("ERROR: Divide by Zero\n");
+	printf("\n");
+      }
+    else
+      {
+	int modulus = inum1 % inum2;
+	printf("%d %% %d = %d\n", inum1, inum2, modulus);
+	printf("\n");
+      }
+  }
   
-  int user_choice; 
   do
     {
       user_choice = menu_prompt();
@@ -131,6 +162,13 @@ int main()
 	    division();
 	    break;
 	  }
+	case 5: /* Option 5, Modulo */
+	  {
+	    operation_header(2);
+	    modulo();
+	    break;
+	  }
+	  
 	} 
     } while (user_choice != 7);
 
