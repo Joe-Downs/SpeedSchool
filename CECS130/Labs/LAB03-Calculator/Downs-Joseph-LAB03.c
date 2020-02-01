@@ -20,8 +20,14 @@ void primality_test();
 
 int main()
 {
+  /* Variable definition */
+  float num1;
+  float num2;
+  int inum1;
+  int inum2;
   int user_input;
   int user_choice;
+
   /* 
    * A functuin which outputs main program menu and prompts user for their choice.
    * Takes no inputs and returns the user's number choice as type char.
@@ -40,12 +46,7 @@ int main()
     printf("Please choose an option: ");
     scanf("%i",&user_input);
     return user_input;
-  }  
-  float num1;
-  float num2;
-  int inum1;
-  int inum2;
-  
+  }    
   /* 
    * operation_header() uses a pre-defined string variable, and prints out a
    * header declaring the operation, and prompts the user for two numbers.
@@ -82,7 +83,8 @@ int main()
       }
     printf("\n");
   }
-  
+
+  /* Functions for the various operations that the calculator can perform. */
   void addition()
   {
     float sum = num1 + num2;
@@ -132,6 +134,55 @@ int main()
 	printf("\n");
       }
   }
+
+  void primality_test()
+  {
+    int primality = 1; /* 0 is false, 1 is true */
+    if (inum1 == 1)
+      {
+	primality = 0;
+      }
+    else if (inum1 == 2 ||
+	inum1 == 3 ||
+	inum1 == 5 ||
+	inum1 == 7)
+      {
+	primality = 1;
+      }
+    else if ((inum1 % 2) == 0)
+      {
+	primality = 0;
+      }
+    else if ((inum1 % 3) == 0)
+      {
+	primality = 0;
+      }
+    else if ((inum1 % 5) == 0)
+      {
+	primality = 0;
+      }
+    else if ((inum1 % 7) == 0)
+      {
+	primality = 0;
+      }
+    else if ((inum1 % 9) == 0)
+      {
+	primality = 0;
+      }
+    else
+      {
+	primality = 1;
+      }
+    if (primality == 0)
+      {
+	printf("%d is not prime\n", inum1);
+      }
+    else
+      {
+	printf("%d is prime\n", inum1);
+      }
+    printf("\n");
+  }
   
   do
     {
@@ -168,8 +219,13 @@ int main()
 	    modulo();
 	    break;
 	  }
-	  
+	case 6: /* Option 6, Primality Test */
+	  {
+	    operation_header(1);
+	    primality_test();
+	    break;
+	  }
 	} 
-    } while (user_choice != 7);
-
+    }
+  while (user_choice != 7);
 }
