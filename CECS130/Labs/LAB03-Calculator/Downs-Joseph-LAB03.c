@@ -79,6 +79,20 @@ int main()
     printf("%.2f - %.2f = %.2f\n", num1, num2, difference);
     printf("\n");
   }
+
+  void multiplication()
+  {
+    float product = num1 * num2;
+    printf("%.2f * %.2f = %.2f\n", num1, num2, product);
+    printf("\n");
+  }
+
+  void division()
+  {
+    float quotient = num1 / num2;
+    printf("%.2f / %.2f = %.2f\n", num1, num2, quotient);
+    printf("\n");
+  }
   
   int user_choice; 
   do
@@ -96,6 +110,18 @@ int main()
 	  {
 	    operation_header(2);
 	    subtraction();
+	    break;
+	  }
+	case 3: /* Option 3, Multiplication */
+	  {
+	    operation_header(2);
+	    multiplication();
+	    break;
+	  }
+	case 4: /* Option 4, Division */
+	  {
+	    operation_header(2);
+	    division();
 	    break;
 	  }
 	} 
