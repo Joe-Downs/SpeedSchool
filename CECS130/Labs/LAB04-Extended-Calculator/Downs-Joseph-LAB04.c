@@ -18,7 +18,7 @@ void division();
 void modulo();
 void primality_test();
 void factorial();
-void power()
+void power();
 void fibonacci();
 
 
@@ -97,21 +97,18 @@ int main()
   {
     float sum = num1 + num2;
     printf("%.2f + %.2f = %.2f\n", num1, num2, sum);
-    printf("\n");
   }
   
   void subtraction()
   {
     float difference = num1 - num2;
     printf("%.2f - %.2f = %.2f\n", num1, num2, difference);
-    printf("\n");
   }
 
   void multiplication()
   {
     float product = num1 * num2;
     printf("%.2f * %.2f = %.2f\n", num1, num2, product);
-    printf("\n");
   }
 
   void division()
@@ -125,7 +122,6 @@ int main()
 	float quotient = num1 / num2;
 	printf("%.2f / %.2f = %.2f\n", num1, num2, quotient);
       }
-    printf("\n");
   }
 
   void modulo()
@@ -133,13 +129,11 @@ int main()
     if (inum2 == 0)
       {
 	printf("ERROR: Divide by Zero\n");
-	printf("\n");
       }
     else
       {
 	int modulus = inum1 % inum2;
 	printf("%d %% %d = %d\n", inum1, inum2, modulus);
-	printf("\n");
       }
   }
 
@@ -189,10 +183,22 @@ int main()
       {
 	printf("%d is prime\n", inum1);
       }
-    printf("\n");
   }
 
-  void 
+  void factorial()
+  {
+    
+  }
+
+  void power()
+  {
+    
+  }
+
+  void fibonacci()
+  {
+
+  }
   
   do
     {
@@ -235,7 +241,26 @@ int main()
 	    primality_test();
 	    break;
 	  }
-	} 
+	case 7: /* Option 7, Factorial */
+	  {
+	    operation_header(1);
+	    factorial();
+	    break;
+	  }
+	case 8: /* Option 8, Power */
+	  {
+	    operation_header(2);
+	    power();
+	    break;
+	  }
+	case 9: /* Option 9, Fibonacci Sequence */
+	  {
+	    operation_header(1);
+	    fibonacci();
+	    break;
+	  }
+	}
+      printf("\n");
     }
   while (user_choice != 0);
 }
