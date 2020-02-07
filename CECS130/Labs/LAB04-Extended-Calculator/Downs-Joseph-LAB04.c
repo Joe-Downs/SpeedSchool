@@ -1,16 +1,17 @@
 /*
  * Name: Joseph Downs
- * Lab 02
- * 2020.01.31
+ * Lab 04
+ * 2020.02.07
  *
  * A simple calculator that can perform addition, subtraction, multiplication,
- * division, modulus, and a primality test.
+ * division, modulus, a primality test, compute factorials, and up to the nth
+ * digit of the Fibonacci Sequence (up to the 500th term)
  */
 
 #include <stdio.h>
 
 int menu_prompt();
-void operation_header(char operation);
+void operation_header();
 void addition();
 void subtraction();
 void multiplication();
@@ -21,7 +22,6 @@ void factorial();
 void power();
 void fibonacci();
 
-
 int main()
 {
   /* Variable definition */
@@ -31,7 +31,6 @@ int main()
   int inum2;
   int user_input;
   int user_choice;
-  int fibonacci_sequence[500]; /* Max of first 500 terms of the sequence */
 
   /* 
    * A functuin which outputs main program menu and prompts user for their choice.
@@ -187,17 +186,69 @@ int main()
 
   void factorial()
   {
-    
+    if (inum1 < 0)
+      {
+	printf("Cannot take the factorial of a negative integer.\n");
+      }
+    else
+      {
+	int i;
+	double factorial = 1;
+	for (i = 1; i <= inum1; i++)
+	  {
+	    factorial = factorial * i;
+	  }
+	printf("%i! = %.0lf\n", inum1, factorial);
+      }
   }
 
   void power()
   {
-    
+    float power = 1;
+    int i;
+    if (num2 == 0)
+    {
+      if (num1 == 0 && num2 == 0)
+	{
+	  printf("0 ** 0 = Undefined\n");
+	}
+      else
+	{
+	  printf("%.2f ** %.0f = 1\n", num1, num2);
+	}
+    }
+    else
+      {
+	for (i = 1; i <= num2; i++)
+	  {
+	    power = power * num1;
+	  }		  
+	printf("%.2f ** %.2f = %.2f\n", num1, num2, power);
+      }
   }
 
   void fibonacci()
   {
-
+    double sequence[500] = {0, 1};
+    int n = inum1;
+    int i;
+    for (i = 2; i <= n; i++)
+      {
+	sequence[i] = sequence[i-1] + sequence[i-2];
+      }
+    printf("The values of the Fibonacci sequence from n=0 to n=%d are:\n", inum1);
+    for (i = 0; i <= n; i++)
+      {
+	printf("%.0lf", sequence[i]);
+	if (i == n)
+	  {
+	    printf("...\n");
+	  }
+	else
+	  {
+	    printf(", "); 
+	  }
+      }
   }
   
   do
