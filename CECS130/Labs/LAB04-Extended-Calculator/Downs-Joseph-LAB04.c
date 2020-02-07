@@ -17,6 +17,10 @@ void multiplication();
 void division();
 void modulo();
 void primality_test();
+void factorial();
+void power()
+void fibonacci();
+
 
 int main()
 {
@@ -27,6 +31,7 @@ int main()
   int inum2;
   int user_input;
   int user_choice;
+  int fibonacci_sequence[500]; /* Max of first 500 terms of the sequence */
 
   /* 
    * A functuin which outputs main program menu and prompts user for their choice.
@@ -41,7 +46,10 @@ int main()
     printf("(4)\tDivision\n");
     printf("(5)\tModulo\t\t(Integers)\n");
     printf("(6)\tPrimality Test\t(Integers)\n");
-    printf("(7)\tExit\n");
+    printf("(7)\tFactorial\t(Integers)\n");
+    printf("(8)\tPower\n");
+    printf("(9)\tFibonacci Sequence to nth Term (Max: 500)\n");
+    printf("(0)\tExit\n");
     printf("\n");
     printf("Please choose an option: ");
     scanf("%i",&user_input);
@@ -76,9 +84,9 @@ int main()
 	    scanf("%f", &num2);
 	  }
       }
-    else /* Only need one number for primality test */
+    else /* Only need one number */
       {
-	printf("Enter the number to test: ");
+	printf("Enter your number to compute: ");
 	scanf("%i", &inum1);
       }
     printf("\n");
@@ -183,6 +191,8 @@ int main()
       }
     printf("\n");
   }
+
+  void 
   
   do
     {
@@ -227,5 +237,5 @@ int main()
 	  }
 	} 
     }
-  while (user_choice != 7);
+  while (user_choice != 0);
 }
