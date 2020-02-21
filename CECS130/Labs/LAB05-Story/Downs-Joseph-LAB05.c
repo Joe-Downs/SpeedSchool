@@ -2,8 +2,8 @@
  * Joseph Downs
  * LAB 05
  * 2020.02.21
- * This program generates interactive stories by asking the user information
- * about themselves, and inputting that information into a defined structure.
+ * This program generates stories by asking the user information about
+ * themselves, and inputting that information into a defined structure.
  */
 
 #include <stdio.h>
@@ -42,6 +42,8 @@ void take_input()
 void print_story()
 {
   
+  switch 
+  printf("%s is %d years old and enjoys driving his %s 
 }
 
 int main()
