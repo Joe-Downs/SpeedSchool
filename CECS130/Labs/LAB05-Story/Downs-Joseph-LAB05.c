@@ -9,7 +9,12 @@
 #include <stdio.h>
 
 void take_input();
+void print_story();
 
+/* 
+ * Takes int and string inputs from the user and stores them in variables to
+ * be used within the randomly 'generated' story.
+ */
 void take_input()
 {
   int age = 0;
@@ -30,7 +35,17 @@ void take_input()
   printf("You speak %s.\n", language);
 }
 
+/*
+ * Uses the input taken from take_input() and prints out the randomly 'generated'
+ * story to console.
+ */
+void print_story()
+{
+  
+}
+
 int main()
 {
   take_input();
+  
 }
