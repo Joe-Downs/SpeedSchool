@@ -51,8 +51,8 @@ char *fav_item_preposition;
 void print_story()
 {
   srand(time(NULL));
-  /* Random int from 0 to 1. */
-  int rand_num1 = rand() % 2;
+  /* Random int from 0 to 2. */
+  int rand_num1 = rand() % 3;
   if (rand_num1 == 0)
     {
       favorite_item = "car";
@@ -68,6 +68,14 @@ void print_story()
       fav_item_make = "Alienware";
       language_activity = "type";
       fav_item_preposition = "on";
+    }
+  else if (rand_num1 == 2)
+    {
+      favorite_item = "guitar";
+      fav_item_verb = "strumming";
+      fav_item_make = "Fender";
+      language_activity = "sing in";
+      fav_item_preposition = "while playing";
     }
   
   /* Generates second random int from 0 to 2 */
@@ -88,12 +96,13 @@ void print_story()
   printf("%s is %d years old and likes their %s %s. ", name, age, color, favorite_item);
   printf("%s spends many %s per day %s their %s. ", name, activity_time, fav_item_verb, favorite_item);
   printf("It is a %s. ", fav_item_make);
-  printf("They also like to %s %s %s their %s %s.",
+  printf("They also like to %s %s %s their %s %s. ",
 	 language_activity,
 	 language,
 	 fav_item_preposition,
 	 color,
 	 favorite_item);
+  printf("%s wishes they could spend all day %s their %s!\n", name, fav_item_verb, favorite_item);
 }
 
 int main()
