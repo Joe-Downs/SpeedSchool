@@ -39,6 +39,7 @@ void take_input()
 }
 char *favorite_item;
 char *fav_item_verb;
+char *make_article;
 char *fav_item_make;
 char *activity_time;
 char *language_activity;
@@ -51,12 +52,13 @@ char *fav_item_preposition;
 void print_story()
 {
   srand(time(NULL));
-  /* Random int from 0 to 2. */
-  int rand_num1 = rand() % 3;
+  /* Random int from 0 to 3. */
+  int rand_num1 = rand() % 4;
   if (rand_num1 == 0)
     {
       favorite_item = "car";
       fav_item_verb = "driving";
+      make_article = "a";
       fav_item_make = "Ferrari LaFerrari";
       language_activity = "speak";
       fav_item_preposition = "in";
@@ -65,6 +67,7 @@ void print_story()
     {
       favorite_item = "computer";
       fav_item_verb = "gaming on";
+      make_article = "an";
       fav_item_make = "Alienware";
       language_activity = "type";
       fav_item_preposition = "on";
@@ -73,14 +76,24 @@ void print_story()
     {
       favorite_item = "guitar";
       fav_item_verb = "strumming";
+      make_article = "a";
       fav_item_make = "Fender";
       language_activity = "sing in";
       fav_item_preposition = "while playing";
     }
+  else if (rand_num1 == 3)
+    {
+      favorite_item = "TV";
+      fav_item_verb = "watching";
+      make_article = "a";
+      fav_item_make = "Samsung";
+      language_activity = "watch programs in";
+      fav_item_preposition = "on";
+    }
   
   /* Generates second random int from 0 to 2 */
   int rand_num2 = rand() % 3;
-  if (rand_num2 == 1)
+  if (rand_num2 == 0)
     {
       activity_time = "hours";
     }
@@ -95,7 +108,7 @@ void print_story()
   
   printf("%s is %d years old and likes their %s %s. ", name, age, color, favorite_item);
   printf("%s spends many %s per day %s their %s. ", name, activity_time, fav_item_verb, favorite_item);
-  printf("It is a %s. ", fav_item_make);
+  printf("It is %s %s. ", make_article, fav_item_make);
   printf("They also like to %s %s %s their %s %s. ",
 	 language_activity,
 	 language,
