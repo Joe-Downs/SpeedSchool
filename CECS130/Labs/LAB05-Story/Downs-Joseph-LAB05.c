@@ -34,9 +34,9 @@ void take_input()
   scanf("%s", color);
   printf("What language do you speak? ");
   scanf("%s", language);
-  printf("Your name is %s and you are %d years old.\n", name, age);
-  printf("You speak %s.\n", language);
+  printf("\n");
 }
+
 char *favorite_item;
 char *fav_item_verb;
 char *make_article;
@@ -52,7 +52,7 @@ char *fav_item_preposition;
 void print_story()
 {
   srand(time(NULL));
-  /* Random int from 0 to 3. */
+  /* Generates random int from 0 to 3. */
   int rand_num1 = rand() % 4;
   if (rand_num1 == 0)
     {
@@ -107,9 +107,13 @@ void print_story()
     }
   
   printf("%s is %d years old and likes their %s %s. ", name, age, color, favorite_item);
-  printf("%s spends many %s per day %s their %s. ", name, activity_time, fav_item_verb, favorite_item);
+  printf("%s spends many %s per day %s their %s.\n",
+	 name,
+	 activity_time,
+	 fav_item_verb,
+	 favorite_item);
   printf("It is %s %s. ", make_article, fav_item_make);
-  printf("They also like to %s %s %s their %s %s. ",
+  printf("They also like to %s %s %s their %s %s.\n",
 	 language_activity,
 	 language,
 	 fav_item_preposition,
@@ -122,5 +126,4 @@ int main()
 {
   take_input();
   print_story();
-  
 }
