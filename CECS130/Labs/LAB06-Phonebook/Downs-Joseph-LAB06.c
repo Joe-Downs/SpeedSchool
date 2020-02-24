@@ -35,7 +35,7 @@ void delete_contact()
 {
 }
 
-void list_contact()
+void list_contacts()
 {
 }
 
@@ -50,11 +50,11 @@ int main()
 	}
       else if (user_choice == 2)
 	{
-	  remove_contact();
+	  delete_contact();
 	}
       else if (user_choice == 3)
 	{
-	  list_contacts()
+	  list_contacts();
 	}
     }
 }
