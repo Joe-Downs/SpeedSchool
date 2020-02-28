@@ -14,6 +14,7 @@ void delete_contact();
 void list_contacts();
 
 int user_choice = 0;
+char contact_list[] = {
 
 void menu_prompt()
 {
@@ -29,6 +30,11 @@ void menu_prompt()
 
 void add_contact()
 {
+  char first_name[50] = {"\0"};
+  char last_name[50] = {"\0"};
+  char number[50] = {"\0"};
+  printf("First Name: ");
+  scanf("%s", 
 }
 
 void delete_contact()
