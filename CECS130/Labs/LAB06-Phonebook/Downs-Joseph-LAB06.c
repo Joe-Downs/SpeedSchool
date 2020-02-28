@@ -7,6 +7,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 
 void menu_prompt();
 void add_contact();
@@ -14,11 +15,18 @@ void delete_contact();
 void list_contacts();
 
 int user_choice = 0;
-char contact_list[] = {
+struct contact
+{
+  char contact_first[50];
+  char contact_last[50];
+  char contact_number[50];
+};
 
+struct contact phonebook[10];
+  
 void menu_prompt()
 {
-  printf("Phone Book\n");
+  printf("Phone Book Options\n");
   printf(" 1. Add Contact\n");
   printf(" 2. Delete Contact\n");
   printf(" 3. List Contacts\n");
@@ -36,12 +44,13 @@ void add_contact()
   printf("First Name: ");
   scanf("%s", first_name);
   printf("Last Name: ");
-  scanf("%s". last_name);
+  scanf("%s", last_name);
   printf("Phone Number: ");
   scanf("%s", phone_number);
   
-  
+  printf("\n");
   printf("Record added to phone book.\n");
+  printf("\n");
 }
 
 void delete_contact()
