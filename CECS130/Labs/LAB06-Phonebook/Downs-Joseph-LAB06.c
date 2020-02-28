@@ -32,9 +32,16 @@ void add_contact()
 {
   char first_name[50] = {"\0"};
   char last_name[50] = {"\0"};
-  char number[50] = {"\0"};
+  char phone_number[50] = {"\0"};
   printf("First Name: ");
-  scanf("%s", 
+  scanf("%s", first_name);
+  printf("Last Name: ");
+  scanf("%s". last_name);
+  printf("Phone Number: ");
+  scanf("%s", phone_number);
+  
+  
+  printf("Record added to phone book.\n");
 }
 
 void delete_contact()
