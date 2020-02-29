@@ -1,4 +1,3 @@
-
 /*
  * Joseph Downs
  * LAB 06
@@ -16,7 +15,7 @@ void add_contact();
 void delete_contact();
 void list_contacts();
 
-int user_choice = 0;
+/* Struct to be hold contact info, each is put into array */
 struct contact
 {
   char contact_first[50];
@@ -24,9 +23,11 @@ struct contact
   char contact_number[50];
 };
 
-int current_index = 0;
-
+/* Array of structures to hold contacts themselves */
 struct contact *phonebook;
+
+int user_choice = 0;
+int current_index = 0;
   
 void menu_prompt()
 {
@@ -52,7 +53,6 @@ void add_contact()
   scanf("%s", last_name);
   printf("Phone Number: ");
   scanf("%s", phone_number);
-
   phonebook = realloc(phonebook, (current_index + 1) * sizeof(struct contact));
   if (phonebook != NULL)
     {
@@ -65,7 +65,6 @@ void add_contact()
       printf("Failed to allocate memory.\n");
     }
   current_index = current_index + 1;
-  
   printf("\n");
   printf("Contact added to phone book.\n");
   printf("\n");
@@ -83,26 +82,16 @@ void delete_contact()
   scanf("%s", deleted_first);
   printf("Last Name: ");
   scanf("%s", deleted_last);
-  
   if (current_index > 0)
     {
       for (n = 0; n < current_index; n++)
 	{
-	  printf("Outside For Loop Run #%d\n",n);
-	  printf("PB entry at index %d is %s %s\n", n, phonebook[n].contact_first, phonebook[n].contact_last);
-	  printf("Looking for: %s %s\n", deleted_first, deleted_last);
-	  printf("strcmp of first = %d\n", strcmp(phonebook[n].contact_first, deleted_first));
-	  printf("strcmp of last = %d\n", strcmp(phonebook[n].contact_last, deleted_last));
 	  if ((strcmp(phonebook[n].contact_first, deleted_first)) == 0 &&
 	      ((strcmp(phonebook[n].contact_last, deleted_last)) == 0))
 	    {
-	      printf("Deletion for loop\n");
 	      for (n = n; n < current_index; n++)
 		{
-		  printf("Run #%d\n", n);
-		  printf("%s", phonebook[n].contact_last);
 		  phonebook[n] = phonebook[n+1];
-		  printf(" should be same as %s\n", phonebook[n].contact_last);
 		}
 	      contact_found = 1;
 	      current_index = current_index - 1;
