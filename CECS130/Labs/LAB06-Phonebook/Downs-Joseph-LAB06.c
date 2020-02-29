@@ -37,6 +37,7 @@ void menu_prompt()
   printf("\n");
   printf("Choose an option: ");
   scanf("%d", &user_choice);
+  printf("\n");
 }
 
 void add_contact()
@@ -65,7 +66,7 @@ void add_contact()
   current_index++;
   
   printf("\n");
-  printf("Record added to phone book.\n");
+  printf("Contact added to phone book.\n");
   printf("\n");
 }
 
@@ -75,6 +76,23 @@ void delete_contact()
 
 void list_contacts()
 {
+  int i;
+  if (current_index == 0)
+  {
+    printf("You have added no contacts.\n");
+  }
+  else
+    {
+      printf("Contacts:\n");
+      for (i = 0; i <= current_index; ++i)
+	{
+	  printf("%s\t%s %s\n",
+		 phonebook[i].contact_number,
+		 phonebook[i].contact_first,
+		 phonebook[i].contact_last);
+	}
+    }
+      printf("\n");
 }
 
 int main()
