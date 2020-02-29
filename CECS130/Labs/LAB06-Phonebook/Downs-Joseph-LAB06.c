@@ -7,6 +7,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 void menu_prompt();
@@ -21,8 +22,10 @@ struct contact
   char contact_last[50];
   char contact_number[50];
 };
+int contact_size = sizeof(struct contact);
+int current_index = 0;
 
-struct contact phonebook[10];
+struct contact *phonebook;
   
 void menu_prompt()
 {
@@ -47,6 +50,19 @@ void add_contact()
   scanf("%s", last_name);
   printf("Phone Number: ");
   scanf("%s", phone_number);
+
+  phonebook = realloc(phonebook, (current_index + 1) * sizeof(struct contact));
+  if (phonebook != NULL)
+    {
+      strcpy(phonebook[current_index].contact_first, first_name);
+      strcpy(phonebook[current_index].contact_last, last_name);
+      strcpy(phonebook[current_index].contact_number, phone_number);
+    }
+  else
+    {
+      printf("Failed to allocate memory.\n");
+    }
+  current_index++;
   
   printf("\n");
   printf("Record added to phone book.\n");
@@ -78,5 +94,7 @@ int main()
 	{
 	  list_contacts();
 	}
+      
     }
+  free(phonebook);
 }
