@@ -1,9 +1,13 @@
 /*
  * Joseph Downs
- * LAB 06
- * 2020.02.28
- * This program can add, delete, and view contact information for any person
- * the user wants.
+ * LAB 07
+ * 2020.03.06
+ * This program builds upon LAB 6's phonebook and can add, delete,
+ * and view contact information for any person the user wants. In
+ * addition, LAB 7 adds the options for the user to sort the list
+ * of entries by first or last name, list a specific contact's
+ * information, randomly select a contact, and delete every
+ * contact in the phonebook at once. 
  */
 
 #include <stdio.h>
