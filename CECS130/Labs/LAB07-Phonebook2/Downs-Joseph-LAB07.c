@@ -17,7 +17,9 @@
 void menu_prompt();
 void add_contact();
 void delete_contact();
-void list_contacts();
+void list_all();
+void display_contact(int is_one);
+int contact_search(string first, string last);
 
 /* Struct to be hold contact info, each is put into array */
 struct contact
@@ -123,7 +125,8 @@ void delete_contact()
   printf("\n");
 }
 
-void list_contacts()
+/* Calls list_contact() function for every contact in the array */
+void list_all()
 {
   int i;
   if (current_index == 0)
@@ -144,6 +147,13 @@ void list_contacts()
   printf("\n");
 }
 
+/* Prints out one single contact */
+void display_contact(int is_one)
+{
+  /* 0 = FALSE; 1 = TRUE */
+  
+}
+
 int main()
 {
   while (user_choice != 4)
@@ -159,7 +169,7 @@ int main()
 	}
       else if (user_choice == 3)
 	{
-	  list_contacts();
+	  list_all();
 	}
       
     }
