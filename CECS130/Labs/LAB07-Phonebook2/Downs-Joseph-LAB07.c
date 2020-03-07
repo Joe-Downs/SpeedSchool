@@ -41,7 +41,8 @@ void menu_prompt()
   printf(" 1. Add Contact\n");
   printf(" 2. Delete Contact\n");
   printf(" 3. List Contacts\n");
-  printf(" 4. Exit\n");
+  printf(" 4. Individual Search\n");
+  printf(" 5. Exit\n");
   printf("\n");
   printf("Choose an option: ");
   scanf("%d", &user_choice);
@@ -83,35 +84,43 @@ void add_contact()
  */
 int contact_search()
 {
-  int n;
-  int index = -1; /* Default value = NOT FOUND */
+  int n = -1; /* Default value = NOT FOUND */
   char search_first[50] = {"\0"};
   char search_last[50] = {"\0"};
-  printf("First Name: ");
-  scanf("%s", search_first);
-  printf("Last Name: ");
-  scanf("%s", search_last);
-  if (current_index > 0)
+  if (current_index == 0)
     {
+      printf("You have added no contacts.\n");
+      printf("\n");
+      return n;
+    }
+  else
+    {
+      printf("First Name: ");
+      scanf("%s", search_first);
+      printf("Last Name: ");
+      scanf("%s", search_last);
       for (n = 0; n < current_index; n++)
 	{
-	  if ((strcmp(phonebook[n].contact_first, search_first) == 0) &&
-	      (strcmp(phonebook[n].contact_last, search_first) == 0))
+	  printf("n = %d\n", n);
+	  printf("%d\n", strcmp(phonebook[n].contact_first, search_first));
+	  printf("%d\n", strcmp(phonebook[n].contact_last, search_first) == 0);
+	  if ((strcmp(phonebook[n].contact_first, search_first) == 0) && (strcmp(phonebook[n].contact_last, search_first) == 0))
 	    {
+	      printf("n = %d\n", n);
 	      return n;
 	    }
 	}
-      if (n == -1)
-	{
-	  printf("The contact could not be found.\n");
-	  return n;
-	}
+      printf("The contact could not be found.\n");
+      printf("\n");
+      n = -1;
+      return n;
     } 
 }
 
 void delete_contact()
 {
   printf("Choose the contact to delete.\n");
+  printf("\n");
   int found_index = contact_search();
   int n;
   if (found_index == -1)
@@ -150,7 +159,7 @@ void delete_contact()
     }
   current_index = current_index - 1;
   tmp = realloc(phonebook, current_index * sizeof(struct contact));
-  if (tmp == NULL)
+  if (tmp == NULL && current_index > 0)
     {
       printf("Failed to allocate memory.\n");
     }
@@ -195,7 +204,8 @@ void print_contact(int index)
 
 int main()
 {
-  while (user_choice != 4)
+  int desired_index = -1;
+  while (user_choice != 5)
     {
       menu_prompt();
       if (user_choice == 1)
@@ -209,6 +219,16 @@ int main()
       else if (user_choice == 3)
 	{
 	  list_all();
+	}
+      else if (user_choice == 4)
+	{
+	  printf("Who would you like to call?\n");
+	  printf("\n");
+	  contact_search();
+	  if (desired_index > 0)
+	    {
+	      print_contact(desired_index);
+	    }
 	}
       
     }
