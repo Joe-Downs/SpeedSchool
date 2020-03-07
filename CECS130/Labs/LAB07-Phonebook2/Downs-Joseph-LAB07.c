@@ -18,8 +18,8 @@ void menu_prompt();
 void add_contact();
 void delete_contact();
 void list_all();
-void display_contact(int is_one);
-int contact_search(string first, string last);
+void display_contact(int, int);
+int contact_search();
 
 /* Struct to be hold contact info, each is put into array */
 struct contact
@@ -54,11 +54,11 @@ void add_contact()
   char last_name[50] = {"\0"};
   char phone_number[50] = {"\0"};
   printf("First Name: ");
-  scanf("%s", &first_name);
+  scanf("%s", first_name);
   printf("Last Name: ");
-  scanf("%s", &last_name);
+  scanf("%s", last_name);
   printf("Phone Number: ");
-  scanf("%s", &phone_number);
+  scanf("%s", phone_number);
   phonebook = realloc(phonebook, (current_index + 1) * sizeof(struct contact));
   if (phonebook != NULL)
     {
@@ -76,10 +76,58 @@ void add_contact()
   printf("\n");
 }
 
-void delete_contact()
+/* 
+ * Prompts user for a first and last name, searches through phonebook for
+ * contact and returns index number of its location or -1 if the contact
+ * could not be found.
+ */
+int contact_search()
 {
   int n;
-  int contact_found = 0; /* 0 = FALSE; 1 = TRUE */
+  int index = -1; /* Default value = NOT FOUND */
+  char search_first[50] = {"\0"};
+  char search_last[50] = {"\0"};
+  printf("First Name: ");
+  scanf("%s", search_first);
+  printf("Last Name: ");
+  scanf("%s", search_last);
+  if (current_index > 0)
+    {
+      for (n = 0; n < current_index; n++)
+	{
+	  if ((strcmp(phonebook[n].contact_first, search_first) == 0) &&
+	      (strcmp(phonebook[n].contact_last, search_first) == 0))
+	    {
+	      return n;
+	    }
+	}
+      if (n == -1)
+	{
+	  printf("The contact could not be found.\n");
+	  return n;
+	}
+    } 
+}
+
+void delete_contact()
+{
+  printf("Choose the contact to delete.\n");
+  int found_index = contact_search();
+  int n;
+  if (found_index == -1)
+    {
+      return;
+    }
+  struct contact *tmp;
+  /*
+  char deleted_first[50];
+  strcpy(deleted_first, phonebook[found_index].contact_first);
+  printf("%s", phonebook[1].contact_first);
+  char deleted_last[50];
+  strcpy(deleted_last, phonebook[found_index].contact_last);
+  printf("%s", phonebook[1].contact_first);
+  /*
+  int contact_found = 0; /* 0 = FALSE; 1 = TRUE 
   char deleted_first[50] = {"\0"};
   char deleted_last[50] = {"\0"};
   struct contact *tmp;
@@ -95,33 +143,23 @@ void delete_contact()
 	  if ((strcmp(phonebook[n].contact_first, deleted_first)) == 0 &&
 	      ((strcmp(phonebook[n].contact_last, deleted_last)) == 0))
 	    {
-	      for (n = n; n < current_index; n++)
-		{
-		  phonebook[n] = phonebook[n+1];
-		}
-	      contact_found = 1;
-	      current_index = current_index - 1;
-	      tmp = realloc(phonebook, current_index * sizeof(struct contact));
-	      if (tmp == NULL)
-		{
-		  printf("Failed to allocate memory.\n");
-		}
-	      else
-		{
-		  phonebook = tmp;
-		}
-	    }
-	}
+  */
+  for (n = found_index; n < current_index; n++)
+    {
+      phonebook[n] = phonebook[n+1];
+    }
+  current_index = current_index - 1;
+  tmp = realloc(phonebook, current_index * sizeof(struct contact));
+  if (tmp == NULL)
+    {
+      printf("Failed to allocate memory.\n");
+    }
+  else
+    {
+      phonebook = tmp;
     }
   printf("\n");
-  if (contact_found == 1)
-    {
-      printf("Deleted %s %s from the list.\n", deleted_first, deleted_last);
-    }
-  else if (contact_found == 0)
-    {
-      printf("The contact could not be found.\n");
-    }
+  /*  printf("Deleted %s %s from the list.\n", deleted_first, deleted_last);*/
   printf("\n");
 }
 
@@ -148,9 +186,13 @@ void list_all()
 }
 
 /* Prints out one single contact */
-void display_contact(int is_one)
+void display_contact(int is_one, int index)
 {
   /* 0 = FALSE; 1 = TRUE */
+  if (is_one == 1)
+    {
+      
+    }
   
 }
 
