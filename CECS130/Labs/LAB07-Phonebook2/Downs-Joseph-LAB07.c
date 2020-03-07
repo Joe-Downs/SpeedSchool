@@ -20,6 +20,7 @@ void delete_contact();
 void list_all();
 void print_contact(int);
 int contact_search();
+void sort_phonebook(int);
 
 /* Struct to be hold contact info, each is put into array */
 struct contact
@@ -42,7 +43,8 @@ void menu_prompt()
   printf(" 2. Delete Contact\n");
   printf(" 3. List Contacts\n");
   printf(" 4. Individual Search\n");
-  printf(" 5. Exit\n");
+  printf(" 5. Sort Phone Book\n");
+  printf(" 6. Exit\n");
   printf("\n");
   printf("Choose an option: ");
   scanf("%d", &user_choice);
@@ -204,10 +206,31 @@ void print_contact(int index)
 	 phonebook[index].contact_last);
 }
 
+/* Sorts phonebook by first (1) or last (2) name */
+void sort_phonebook(int sort)
+{
+  if (sort == 1)
+    {
+      
+    }
+  else if (sort == 2)
+    {
+      
+    }
+  else
+    {
+      printf("Sorry, that is not a valid option");
+      return;
+    }
+  printf("Phone book has been sorted.\n");
+  printf("\n");
+}
+
 int main()
 {
   int desired_index = -1;
-  while (user_choice != 5)
+  int sort_choice;
+  while (user_choice != 6)
     {
       menu_prompt();
       if (user_choice == 1)
@@ -233,6 +256,16 @@ int main()
 	      print_contact(desired_index);
 	      printf("\n");
 	    }
+	}
+      else if (user_choice == 5)
+	{
+	  printf("Sort phone book by:\n");
+	  printf("(1) First\n");
+	  printf("(2) Last Name\n");
+	  printf("Choose an option: ");
+	  scanf("%d", &sort_choice);
+	  printf("\n");
+	  sort_phonebook(sort_choice);
 	}
       
     }
