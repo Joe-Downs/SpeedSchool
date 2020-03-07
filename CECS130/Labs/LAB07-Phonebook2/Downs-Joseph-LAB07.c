@@ -18,7 +18,7 @@ void menu_prompt();
 void add_contact();
 void delete_contact();
 void list_all();
-void display_contact(int, int);
+void print_contact(int);
 int contact_search();
 
 /* Struct to be hold contact info, each is put into array */
@@ -159,41 +159,38 @@ void delete_contact()
       phonebook = tmp;
     }
   printf("\n");
-  /*  printf("Deleted %s %s from the list.\n", deleted_first, deleted_last);*/
+  /*
+  printf("Deleted %s %s from the list.\n", deleted_first, deleted_last);
   printf("\n");
+  */
 }
 
-/* Calls list_contact() function for every contact in the array */
+/* Calls print_contact() function for every contact in the array */
 void list_all()
 {
   int i;
   if (current_index == 0)
-  {
-    printf("You have added no contacts.\n");
-  }
+    {
+      printf("You have added no contacts.\n");
+    }
   else
     {
       printf("Contacts:\n");
       for (i = 0; i < current_index; ++i)
 	{
-	  printf("%s\t%s %s\n",
-		 phonebook[i].contact_number,
-		 phonebook[i].contact_first,
-		 phonebook[i].contact_last);
+	  print_contact(i);
 	}
     }
   printf("\n");
 }
 
-/* Prints out one single contact */
-void display_contact(int is_one, int index)
+/* Prints out one single contact given the index */
+void print_contact(int index)
 {
-  /* 0 = FALSE; 1 = TRUE */
-  if (is_one == 1)
-    {
-      
-    }
-  
+  printf("%s\t%s %s\n",
+	 phonebook[index].contact_number,
+	 phonebook[index].contact_first,
+	 phonebook[index].contact_last);
 }
 
 int main()
