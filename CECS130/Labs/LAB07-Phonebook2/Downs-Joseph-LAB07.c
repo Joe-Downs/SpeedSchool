@@ -101,15 +101,17 @@ int contact_search()
       scanf("%s", search_last);
       for (n = 0; n < current_index; n++)
 	{
+	  /*
 	  printf("n = %d\n", n);
 	  printf("%d\n", strcmp(phonebook[n].contact_first, search_first));
-	  printf("%d\n", strcmp(phonebook[n].contact_last, search_first) == 0);
-	  if ((strcmp(phonebook[n].contact_first, search_first) == 0) && (strcmp(phonebook[n].contact_last, search_first) == 0))
+	  printf("%d\n", strcmp(phonebook[n].contact_last, search_last));
+	  */
+	  if (strcmp(phonebook[n].contact_first, search_first) == 0 && strcmp(phonebook[n].contact_last, search_last) == 0)
 	    {
-	      printf("n = %d\n", n);
 	      return n;
 	    }
 	}
+      printf("\n");
       printf("The contact could not be found.\n");
       printf("\n");
       n = -1;
@@ -224,10 +226,12 @@ int main()
 	{
 	  printf("Who would you like to call?\n");
 	  printf("\n");
-	  contact_search();
-	  if (desired_index > 0)
+	  desired_index = contact_search();
+	  if (desired_index != -1)
 	    {
+	      printf("\n");
 	      print_contact(desired_index);
+	      printf("\n");
 	    }
 	}
       
