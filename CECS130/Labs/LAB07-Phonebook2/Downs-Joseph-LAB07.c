@@ -21,6 +21,7 @@ void list_all();
 void print_contact(int);
 int contact_search();
 void sort_phonebook(int);
+int sort_entry(int, int);
 
 /* Struct to be hold contact info, each is put into array */
 struct contact
@@ -206,12 +207,24 @@ void print_contact(int index)
 	 phonebook[index].contact_last);
 }
 
+/* Decides if which entry goes before or after another */
+int sort_entry(int entry1, int entry2)
+{
+  
+}
+
 /* Sorts phonebook by first (1) or last (2) name */
 void sort_phonebook(int sort)
 {
+  int n;
+  int i;
+  int index_first; /* Index of first-occurring value */
   if (sort == 1)
     {
-      
+      for (n = 0, n < current_index; ++n)
+	{
+	  
+	}
     }
   else if (sort == 2)
     {
