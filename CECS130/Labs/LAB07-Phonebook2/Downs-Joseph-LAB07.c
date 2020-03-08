@@ -131,8 +131,12 @@ void delete_contact()
     {
       return;
     }
+  char deleted_first[50];
+  char deleted_last[50];
+  strcpy(deleted_first, phonebook[found_index].contact_first);
+  strcpy(deleted_last, phonebook[found_index].contact_last);
   struct contact *tmp;
-  for (n = found_index; n < current_index; n++)
+  for (n = found_index; n < current_index - 1; n++)
     {
       phonebook[n] = phonebook[n+1];
     }
@@ -145,6 +149,8 @@ void delete_contact()
   else
     {
       phonebook = tmp;
+      printf("\n");
+      printf("Deleted %s %s from the list.\n", deleted_first, deleted_last);
     }
   printf("\n");
 }
@@ -200,9 +206,7 @@ void individual_search()
 int sort_entry(int entry1_index, int entry2_index)
 {
   int n;
-  char entry1_first[50];
   char entry1_last[50];
-  char entry2_first[50];
   char entry2_last[50];
   strcpy(entry1_last, phonebook[entry1_index].contact_last);
   strcpy(entry2_last, phonebook[entry2_index].contact_last);
