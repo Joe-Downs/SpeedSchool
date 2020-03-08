@@ -21,8 +21,10 @@ void delete_contact();
 void list_all();
 void print_contact(int);
 int contact_search();
+void individual_search();
 void sort_phonebook();
 int sort_entry(int, int);
+void clear_phonebook();
 void random_contact();
 
 /* Struct to be hold contact info, each is put into array */
@@ -100,26 +102,23 @@ int contact_search()
       printf("\n");
       return n;
     }
-  else
+  printf("First Name: ");
+  scanf("%s", search_first);
+  printf("Last Name: ");
+  scanf("%s", search_last);
+  for (n = 0; n < current_index; n++)
     {
-      printf("First Name: ");
-      scanf("%s", search_first);
-      printf("Last Name: ");
-      scanf("%s", search_last);
-      for (n = 0; n < current_index; n++)
+      if (strcmp(phonebook[n].contact_first, search_first) == 0 && strcmp(phonebook[n].contact_last, search_last) == 0)
 	{
-	  if (strcmp(phonebook[n].contact_first, search_first) == 0 && strcmp(phonebook[n].contact_last, search_last) == 0)
-	    {
-	      return n;
-	    }
+	  return n;
 	}
-      printf("\n");
-      printf("The contact could not be found.\n");
-      printf("\n");
-      n = -1;
-      return n;
-    } 
-}
+    }
+  printf("\n");
+  printf("The contact could not be found.\n");
+  printf("\n");
+  n = -1;
+  return n;
+} 
 
 /* Deletes contact as specified by the user */
 void delete_contact()
@@ -157,14 +156,13 @@ void list_all()
   if (current_index == 0)
     {
       printf("You have added no contacts.\n");
+      printf("\n");
+      return;
     }
-  else
+  printf("Contacts:\n");
+  for (i = 0; i < current_index; ++i)
     {
-      printf("Contacts:\n");
-      for (i = 0; i < current_index; ++i)
-	{
-	  print_contact(i);
-	}
+      print_contact(i);
     }
   printf("\n");
 }
@@ -176,6 +174,26 @@ void print_contact(int index)
 	 phonebook[index].contact_number,
 	 phonebook[index].contact_first,
 	 phonebook[index].contact_last);
+}
+
+void individual_search()
+{
+  if (current_index == 0)
+    {
+      printf("You have added no contacts.\n");
+      printf("\n");
+      return;
+    }
+  int desired_index;
+  printf("Who would you like to call?\n");
+  printf("\n");
+  desired_index = contact_search();
+  if (desired_index != -1)
+    {
+      printf("\n");
+      print_contact(desired_index);
+      printf("\n");
+    }
 }
 
 /* Decides which entry goes before or after another */
@@ -205,6 +223,12 @@ int sort_entry(int entry1_index, int entry2_index)
 /* Sorts phonebook by last name */
 void sort_phonebook()
 {
+  if (current_index == 0)
+    {
+      printf("You have added no contacts.\n");
+      printf("\n");
+      return;
+    }
   int n;
   int i;
   int index_first = 0; /* Index of first-occurring value */
@@ -246,6 +270,20 @@ void sort_phonebook()
   printf("\n");
 }
 
+void clear_phonebook()
+{
+  if (current_index == 0)
+    {
+      printf("The phone book is already clear.\n");
+      printf("\n");
+      return;
+    }
+  free(phonebook);
+  phonebook = calloc(1, sizeof(struct contact));
+  current_index = 0;
+  printf("The phone book has been cleared.\n");
+  printf("\n");
+}
 /* Selects then prints random contact from phone book */
 void random_contact()
 {
@@ -262,10 +300,10 @@ void random_contact()
   printf("\n");
 }
 
+
+
 int main()
 {
-  int desired_index = -1;
-  int sort_choice;
   while (user_choice != 8)
     {
       menu_prompt();
@@ -283,15 +321,7 @@ int main()
 	}
       else if (user_choice == 4)
 	{
-	  printf("Who would you like to call?\n");
-	  printf("\n");
-	  desired_index = contact_search();
-	  if (desired_index != -1)
-	    {
-	      printf("\n");
-	      print_contact(desired_index);
-	      printf("\n");
-	    }
+	  individual_search();
 	}
       else if (user_choice == 5)
 	{
@@ -299,11 +329,7 @@ int main()
 	}
       else if (user_choice == 6)
 	{
-	  free(phonebook);
-	  phonebook = calloc(1, sizeof(struct contact));
-	  current_index = 0;
-	  printf("The phone book has been cleared.\n");
-	  printf("\n");
+	  clear_phonebook();
 	}
       else if (user_choice == 7)
 	{
