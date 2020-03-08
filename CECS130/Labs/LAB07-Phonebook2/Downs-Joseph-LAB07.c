@@ -20,7 +20,7 @@ void delete_contact();
 void list_all();
 void print_contact(int);
 int contact_search();
-void sort_phonebook(int);
+void sort_phonebook();
 int sort_entry(int, int);
 
 /* Struct to be hold contact info, each is put into array */
@@ -215,45 +215,78 @@ int sort_entry(int entry1_index, int entry2_index)
   char entry1_last[50];
   char entry2_first[50];
   char entry2_last[50];
-  strcpy(entry1_first, phonebook[entry1_index].contact_first);
+  //strcpy(entry1_first, phonebook[entry1_index].contact_first);
   strcpy(entry1_last, phonebook[entry1_index].contact_last);
-  strcpy(entry2_first, phonebook[entry2_index].contact_first);
+  //strcpy(entry2_first, phonebook[entry2_index].contact_first);
   strcpy(entry2_last, phonebook[entry2_index].contact_last);
-  printf("Entry 1: %s %s\nEntry 2: %s %s\n", entry1_first, entry1_last, entry2_first, entry2_last);
+  //printf("Entry 1: %s %s\nEntry 2: %s %s\n", entry1_first, entry1_last, entry2_first, entry2_last);
   for (n = 0; n < 49; n++)
     {
       if (entry1_last[n] > entry2_last[n])
 	{
-	  return 1;
+	  printf("%s is after %s\n", entry1_last, entry2_last);
+	  return 2;
 	}
       else if (entry1_last[n] < entry2_last[n])
 	{
-	  return 2;
+	  printf("%s is before %s\n", entry1_last, entry2_last);
+	  return 1;
 	}
+      printf("Failed to compare strings... Returning 1\n");
+      return 1;
     }
 }
 
-/* Sorts phonebook by first (1) or last (2) name */
-void sort_phonebook(int sort)
+/* Sorts phonebook by last name */
+void sort_phonebook()
 {
   int n;
   int i;
-  int index_first; /* Index of first-occurring value */
-  if (sort == 1)
+  int index_first = 0; /* Index of first-occurring value */
+  struct contact tmp_entry;
+  for (i = 0; i < current_index - 1; i++)
     {
-      for (n = 0; n < current_index; ++n)
+      printf("Run #%d\n", i);
+      index_first = i;
+      for (n = i; n < current_index; n++)
 	{
-	  
+	  printf("Run #%d-%d\n", i, n);
+	  if (n == current_index - 1)
+	    {
+	      /* Do nothing, no following indices to compare against */
+	    }
+	  else if (sort_entry(index_first, n+1) == 1)
+	    {
+	      
+	    }
+	  else
+	    {
+	      index_first = n+1;
+	    }
 	}
-    }
-  else if (sort == 2)
-    {
-      
-    }
-  else
-    {
-      printf("Sorry, that is not a valid option");
-      return;
+      printf("The first entry of this run is: %s %s\n",
+		 phonebook[index_first].contact_first,
+		 phonebook[index_first].contact_last);
+      if (i == index_first)
+	{
+	  /* Do nothing, contact is already where it should be */
+	}
+      else
+	{
+	  tmp_entry = phonebook[i];
+	  phonebook[i] = phonebook[index_first];
+	  for (n = index_first; n > i; n--)
+	    {
+	      phonebook[n] = phonebook[n-1];
+	      printf("Moving %s %s to replace %s %s\n",
+		     phonebook[n].contact_first,
+		     phonebook[n].contact_last,
+		     phonebook[n-1].contact_first,
+		     phonebook[n-1].contact_last);
+	    }
+	  phonebook[i+1] = tmp_entry;
+	}
+	  list_all();
     }
   printf("Phone book has been sorted.\n");
   printf("\n");
@@ -292,15 +325,16 @@ int main()
 	}
       else if (user_choice == 5)
 	{
+	  /*
 	  printf("Sort phone book by:\n");
 	  printf("(1) First\n");
 	  printf("(2) Last Name\n");
 	  printf("Choose an option: ");
 	  scanf("%d", &sort_choice);
+	  */
 	  printf("\n");
-	  sort_phonebook(sort_choice);
+	  sort_phonebook();
 	}
     }
-  sort_entry(0, 1);
   free(phonebook);
 }
