@@ -207,10 +207,30 @@ void print_contact(int index)
 	 phonebook[index].contact_last);
 }
 
-/* Decides if which entry goes before or after another */
-int sort_entry(int entry1, int entry2)
+/* Decides which entry goes before or after another */
+int sort_entry(int entry1_index, int entry2_index)
 {
-  
+  int n;
+  char entry1_first[50];
+  char entry1_last[50];
+  char entry2_first[50];
+  char entry2_last[50];
+  strcpy(entry1_first, phonebook[entry1_index].contact_first);
+  strcpy(entry1_last, phonebook[entry1_index].contact_last);
+  strcpy(entry2_first, phonebook[entry2_index].contact_first);
+  strcpy(entry2_last, phonebook[entry2_index].contact_last);
+  printf("Entry 1: %s %s\nEntry 2: %s %s\n", entry1_first, entry1_last, entry2_first, entry2_last);
+  for (n = 0; n < 49; n++)
+    {
+      if (entry1_last[n] > entry2_last[n])
+	{
+	  return 1;
+	}
+      else if (entry1_last[n] < entry2_last[n])
+	{
+	  return 2;
+	}
+    }
 }
 
 /* Sorts phonebook by first (1) or last (2) name */
@@ -221,7 +241,7 @@ void sort_phonebook(int sort)
   int index_first; /* Index of first-occurring value */
   if (sort == 1)
     {
-      for (n = 0, n < current_index; ++n)
+      for (n = 0; n < current_index; ++n)
 	{
 	  
 	}
@@ -280,7 +300,7 @@ int main()
 	  printf("\n");
 	  sort_phonebook(sort_choice);
 	}
-      
     }
+  sort_entry(0, 1);
   free(phonebook);
 }
