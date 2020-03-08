@@ -107,11 +107,6 @@ int contact_search()
       scanf("%s", search_last);
       for (n = 0; n < current_index; n++)
 	{
-	  /*
-	  printf("n = %d\n", n);
-	  printf("%d\n", strcmp(phonebook[n].contact_first, search_first));
-	  printf("%d\n", strcmp(phonebook[n].contact_last, search_last));
-	  */
 	  if (strcmp(phonebook[n].contact_first, search_first) == 0 && strcmp(phonebook[n].contact_last, search_last) == 0)
 	    {
 	      return n;
@@ -125,6 +120,7 @@ int contact_search()
     } 
 }
 
+/* Deletes contact as specified by the user */
 void delete_contact()
 {
   printf("Choose the contact to delete.\n");
@@ -136,31 +132,6 @@ void delete_contact()
       return;
     }
   struct contact *tmp;
-  /*
-  char deleted_first[50];
-  strcpy(deleted_first, phonebook[found_index].contact_first);
-  printf("%s", phonebook[1].contact_first);
-  char deleted_last[50];
-  strcpy(deleted_last, phonebook[found_index].contact_last);
-  printf("%s", phonebook[1].contact_first);
-  /*
-  int contact_found = 0; /* 0 = FALSE; 1 = TRUE 
-  char deleted_first[50] = {"\0"};
-  char deleted_last[50] = {"\0"};
-  struct contact *tmp;
-  printf("Choose the contact to delete.\n");
-  printf("First Name: ");
-  scanf("%s", deleted_first);
-  printf("Last Name: ");
-  scanf("%s", deleted_last);
-  if (current_index > 0)
-    {
-      for (n = 0; n < current_index; n++)
-	{
-	  if ((strcmp(phonebook[n].contact_first, deleted_first)) == 0 &&
-	      ((strcmp(phonebook[n].contact_last, deleted_last)) == 0))
-	    {
-  */
   for (n = found_index; n < current_index; n++)
     {
       phonebook[n] = phonebook[n+1];
@@ -176,10 +147,6 @@ void delete_contact()
       phonebook = tmp;
     }
   printf("\n");
-  /*
-  printf("Deleted %s %s from the list.\n", deleted_first, deleted_last);
-  printf("\n");
-  */
 }
 
 /* Calls print_contact() function for every contact in the array */
@@ -218,24 +185,18 @@ int sort_entry(int entry1_index, int entry2_index)
   char entry1_last[50];
   char entry2_first[50];
   char entry2_last[50];
-  //strcpy(entry1_first, phonebook[entry1_index].contact_first);
   strcpy(entry1_last, phonebook[entry1_index].contact_last);
-  //strcpy(entry2_first, phonebook[entry2_index].contact_first);
   strcpy(entry2_last, phonebook[entry2_index].contact_last);
-  //printf("Entry 1: %s %s\nEntry 2: %s %s\n", entry1_first, entry1_last, entry2_first, entry2_last);
   for (n = 0; n < 49; n++)
     {
       if (entry1_last[n] > entry2_last[n])
 	{
-	  printf("%s is after %s\n", entry1_last, entry2_last);
 	  return 2;
 	}
       else if (entry1_last[n] < entry2_last[n])
 	{
-	  printf("%s is before %s\n", entry1_last, entry2_last);
 	  return 1;
 	}
-      printf("Failed to compare strings... Returning 1\n");
       return 1;
     }
 }
@@ -249,27 +210,22 @@ void sort_phonebook()
   struct contact tmp_entry;
   for (i = 0; i < current_index - 1; i++)
     {
-      printf("Run #%d\n", i);
       index_first = i;
       for (n = i; n < current_index; n++)
 	{
-	  printf("Run #%d-%d\n", i, n);
 	  if (n == current_index - 1)
 	    {
 	      /* Do nothing, no following indices to compare against */
 	    }
 	  else if (sort_entry(index_first, n+1) == 1)
 	    {
-	      
+	      /* Do nothing, index_first is (as of now) the first contact, alphabetically */
 	    }
 	  else
 	    {
 	      index_first = n+1;
 	    }
 	}
-      printf("The first entry of this run is: %s %s\n",
-		 phonebook[index_first].contact_first,
-		 phonebook[index_first].contact_last);
       if (i == index_first)
 	{
 	  /* Do nothing, contact is already where it should be */
@@ -281,15 +237,9 @@ void sort_phonebook()
 	  for (n = index_first; n > i; n--)
 	    {
 	      phonebook[n] = phonebook[n-1];
-	      printf("Moving %s %s to replace %s %s\n",
-		     phonebook[n].contact_first,
-		     phonebook[n].contact_last,
-		     phonebook[n-1].contact_first,
-		     phonebook[n-1].contact_last);
 	    }
 	  phonebook[i+1] = tmp_entry;
 	}
-	  list_all();
     }
   printf("Phone book has been sorted.\n");
   printf("\n");
@@ -328,14 +278,6 @@ int main()
 	}
       else if (user_choice == 5)
 	{
-	  /*
-	  printf("Sort phone book by:\n");
-	  printf("(1) First\n");
-	  printf("(2) Last Name\n");
-	  printf("Choose an option: ");
-	  scanf("%d", &sort_choice);
-	  */
-	  printf("\n");
 	  sort_phonebook();
 	}
       else if (user_choice == 6)
