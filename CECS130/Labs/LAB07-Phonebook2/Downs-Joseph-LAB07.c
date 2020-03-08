@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 void menu_prompt();
 void add_contact();
@@ -46,7 +47,8 @@ void menu_prompt()
   printf(" 4. Individual Search\n");
   printf(" 5. Sort Phone Book\n");
   printf(" 6. Clear Phone Book\n");
-  printf(" 7. Exit\n");
+  printf(" 7. Randomly Select Contact\n");
+  printf(" 8. Exit\n");
   printf("\n");
   printf("Choose an option: ");
   scanf("%d", &user_choice);
@@ -297,7 +299,7 @@ int main()
 {
   int desired_index = -1;
   int sort_choice;
-  while (user_choice != 7)
+  while (user_choice != 8)
     {
       menu_prompt();
       if (user_choice == 1)
@@ -343,7 +345,14 @@ int main()
 	  current_index = 0;
 	  printf("The phone book has been cleared.\n");
 	  printf("\n");
-	  
+	}
+      else if (user_choice == 7)
+	{
+	  srand(time(NULL));
+	  /* Generates random number from 0 to the length of the phone book - 1 */
+	  int rand_index = rand() % current_index;
+	  print_contact(rand_index);
+	  printf("\n");
 	}
     }
   free(phonebook);
