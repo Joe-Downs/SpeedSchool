@@ -23,6 +23,7 @@ void print_contact(int);
 int contact_search();
 void sort_phonebook();
 int sort_entry(int, int);
+void random_contact();
 
 /* Struct to be hold contact info, each is put into array */
 struct contact
@@ -245,6 +246,22 @@ void sort_phonebook()
   printf("\n");
 }
 
+/* Selects then prints random contact from phone book */
+void random_contact()
+{
+  if (current_index == 0)
+  {
+    printf("You have added no contacts.\n");
+    printf("\n");
+    return;
+  }
+  srand(time(NULL));
+  /* Generates random number from 0 to the length of the phone book - 1 */
+  int rand_index = rand() % current_index;
+  print_contact(rand_index);
+  printf("\n");
+}
+
 int main()
 {
   int desired_index = -1;
@@ -290,11 +307,7 @@ int main()
 	}
       else if (user_choice == 7)
 	{
-	  srand(time(NULL));
-	  /* Generates random number from 0 to the length of the phone book - 1 */
-	  int rand_index = rand() % current_index;
-	  print_contact(rand_index);
-	  printf("\n");
+	  random_contact();
 	}
     }
   free(phonebook);
