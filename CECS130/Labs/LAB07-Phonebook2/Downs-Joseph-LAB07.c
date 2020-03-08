@@ -45,7 +45,8 @@ void menu_prompt()
   printf(" 3. List Contacts\n");
   printf(" 4. Individual Search\n");
   printf(" 5. Sort Phone Book\n");
-  printf(" 6. Exit\n");
+  printf(" 6. Clear Phone Book\n");
+  printf(" 7. Exit\n");
   printf("\n");
   printf("Choose an option: ");
   scanf("%d", &user_choice);
@@ -296,7 +297,7 @@ int main()
 {
   int desired_index = -1;
   int sort_choice;
-  while (user_choice != 6)
+  while (user_choice != 7)
     {
       menu_prompt();
       if (user_choice == 1)
@@ -334,6 +335,15 @@ int main()
 	  */
 	  printf("\n");
 	  sort_phonebook();
+	}
+      else if (user_choice == 6)
+	{
+	  free(phonebook);
+	  phonebook = calloc(1, sizeof(struct contact));
+	  current_index = 0;
+	  printf("The phone book has been cleared.\n");
+	  printf("\n");
+	  
 	}
     }
   free(phonebook);
