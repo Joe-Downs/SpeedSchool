@@ -27,6 +27,8 @@ void sort_phonebook();
 int sort_entry(int, int);
 void clear_phonebook();
 void random_contact();
+void save_phonebook();
+void load_phonebook();
 
 /* Struct to be hold contact info, each is put into array */
 struct contact
@@ -45,14 +47,16 @@ int current_index = 0;
 void menu_prompt()
 {
   printf("Phone Book Options\n");
-  printf(" 1. Add Contact\n");
-  printf(" 2. Delete Contact\n");
-  printf(" 3. List Contacts\n");
-  printf(" 4. Individual Search\n");
-  printf(" 5. Sort Phone Book\n");
-  printf(" 6. Clear Phone Book\n");
-  printf(" 7. Randomly Select Contact\n");
-  printf(" 8. Exit\n");
+  printf(" 1.  Add Contact\n");
+  printf(" 2.  Delete Contact\n");
+  printf(" 3.  List Contacts\n");
+  printf(" 4.  Individual Search\n");
+  printf(" 5.  Sort Phone Book\n");
+  printf(" 6.  Clear Phone Book\n");
+  printf(" 7.  Randomly Select Contact\n");
+  printf(" 8.  Save to File\n");
+  printf(" 9.  Load from File\n");
+  printf(" 10. Exit\n");
   printf("\n");
   printf("Choose an option: ");
   scanf("%d", &user_choice);
@@ -305,11 +309,19 @@ void random_contact()
   printf("\n");
 }
 
+void save_phonebook()
+{
+  
+}
 
+void load_phonebook()
+{
+  
+}
 
 int main()
 {
-  while (user_choice != 8)
+  while (user_choice != 10)
     {
       menu_prompt();
       if (user_choice == 1)
@@ -339,6 +351,14 @@ int main()
       else if (user_choice == 7)
 	{
 	  random_contact();
+	}
+      else if (user_choice == 8)
+	{
+	  save_phonebook();
+	}
+      else if (user_choice == 9)
+	{
+	  load_phonebook();
 	}
     }
   free(phonebook);
