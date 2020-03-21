@@ -17,6 +17,7 @@
 #include <time.h>
 
 void menu_prompt();
+void add_to_array(char first_name[50], char last_name[50], char phone_number[50]);
 void add_contact();
 void delete_contact();
 void list_all();
@@ -63,17 +64,8 @@ void menu_prompt()
   printf("\n");
 }
 
-void add_contact()
+void add_to_array(char first_name[50], char last_name[50], char phone_number[50])
 {
-  char first_name[50] = {"\0"};
-  char last_name[50] = {"\0"};
-  char phone_number[50] = {"\0"};
-  printf("First Name: ");
-  scanf("%s", first_name);
-  printf("Last Name: ");
-  scanf("%s", last_name);
-  printf("Phone Number: ");
-  scanf("%s", phone_number);
   phonebook = realloc(phonebook, (current_index + 1) * sizeof(struct contact));
   if (phonebook != NULL)
     {
@@ -86,6 +78,20 @@ void add_contact()
       printf("Failed to allocate memory.\n");
     }
   current_index = current_index + 1;
+}
+
+void add_contact()
+{
+  char first_name[50] = {"\0"};
+  char last_name[50] = {"\0"};
+  char phone_number[50] = {"\0"};
+  printf("First Name: ");
+  scanf("%s", first_name);
+  printf("Last Name: ");
+  scanf("%s", last_name);
+  printf("Phone Number: ");
+  scanf("%s", phone_number);
+  add_to_array(first_name, last_name, phone_number); 
   printf("\n");
   printf("Contact added to phone book.\n");
   printf("\n");
@@ -309,6 +315,7 @@ void random_contact()
   printf("\n");
 }
 
+/* Prompts user to enter filepath to save the current phone book in */
 void save_phonebook()
 {
   
