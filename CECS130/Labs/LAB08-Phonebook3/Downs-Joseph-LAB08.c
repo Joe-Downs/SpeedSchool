@@ -233,6 +233,7 @@ int sort_entry(int entry1_index, int entry2_index)
 	}
       return 1;
     }
+  return 1;
 }
 
 /* Sorts phonebook by last name */
@@ -345,14 +346,58 @@ void save_phonebook()
 	    phonebook[n].contact_number);
     }
   fclose(write);
+  printf("\n");
+  printf("The phonebook has been saved to %s\n", saved_filename);
+  printf("\n");
 }
 
-/* Prompts user for filepath of their saved phone book to load */
+/* Prompts user for name of their saved phone book to load */
 void load_phonebook()
 {
   FILE *read;
-  
+  char open_filename[50];
+  if (current_index > 0)
+    {
+      char user_input;
+      printf("There are already contacts in the phone book.\n");
+      printf("Loading a phone book will delete any contacts not saved to a file.\n");
+      printf("Do you wish to proceed?(Y/N) ");
+      scanf("%s", &user_input);
+      printf("\n");
+      if (user_input == 'n' || user_input == 'N')
+      {
+	return;
+      }
+      clear_phonebook();
+    }
+  printf("What is the name of your phone book's save file? (without extension or filepath)\n");
+  printf("NOTE: the file must be in the program's current working directory\n");
+  scanf("%s", open_filename);
+  strcat(open_filename,".txt");
+  read = fopen(open_filename, "r");
+  if (read == NULL)
+    {
+      printf("\n");
+      printf("File cannot be opened.\n");
+      printf("\n");
+      return;
+    }
+  char file_first[50];
+  char file_last[50];
+  char file_number[50];
+  do
+    {
+      fscanf(read, "%s%s%s", file_first, file_last, file_number);
+      if (!feof(read))
+	{
+	  add_to_array(file_first, file_last, file_number);
+	}
+    }
+  while (!feof(read));
   fclose(read);
+  printf("\n");
+  printf("%s has been loaded into the program.\n", open_filename);
+  printf("\n");
 }
 
 int main()
