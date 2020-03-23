@@ -299,6 +299,7 @@ void clear_phonebook()
   printf("The phone book has been cleared.\n");
   printf("\n");
 }
+
 /* Selects then prints random contact from phone book */
 void random_contact()
 {
@@ -315,15 +316,43 @@ void random_contact()
   printf("\n");
 }
 
-/* Prompts user to enter filepath to save the current phone book in */
+/* 
+ * Prompts user to enter filename to save the current phone book as in
+ * the current working directory
+ */
 void save_phonebook()
 {
-  
+  FILE *write;
+  char saved_filename[50];
+  if (current_index == 0)
+    {
+      printf("You have added no contacts.\n");
+      printf("\n");
+      return;
+    }
+  printf("What would you like to call this phone book?\n");
+  printf("(Without extension or filepath - it will be saved in the current working directory)\n");
+  scanf("%s", saved_filename);
+  strcat(saved_filename, ".txt");
+  write = fopen(saved_filename, "w");
+  /* Iterate through phone book array and write each contact to the file */
+  int n;
+  for (n = 0; n < current_index; n++)
+    {
+      fprintf(write, "%s %s %s\n",
+	    phonebook[n].contact_first,
+	    phonebook[n].contact_last,
+	    phonebook[n].contact_number);
+    }
+  fclose(write);
 }
 
+/* Prompts user for filepath of their saved phone book to load */
 void load_phonebook()
 {
+  FILE *read;
   
+  fclose(read);
 }
 
 int main()
