@@ -12,11 +12,16 @@
 #include <iostream>
 #include <ctype.h>
 #include <string>
+#include <time.h>
 
 using namespace std;
 
 void update_board(char row, int column, char choice);
 void print_board();
+void user_move();
+void cpu_move();
+bool is_valid();
+bool is_over();
 
 class board
 {
@@ -145,12 +150,60 @@ void print_board()
   cout<<endl;
 }
 
-
 int main()
 {
-  print_board();
-  update_board('A', 1, 'O');
-  print_board();
-  update_board('C', 3, 'X');
-  print_board();
+  string win_message;
+  string usr_win = "You have won! Congratulations!";
+  string cpu_win = "CPU has won. Better luck next time!";
+  
+  srand(time(NULL));
+  int first_play = rand() % 2;
+  /* User plays first */
+  if (first_play == 0)
+    {
+      cout<<"User plays first."<<endl;
+      cout<<endl;
+      do
+	{
+	  print_board();
+	  user_move();
+	  if (is_over())
+	    {
+	      /* User has won, no need for CPU to play */
+	      win_message = usr_win;
+	    }
+	  else
+	    {
+	      cpu_move();
+	      win_message = cpu_win;
+	    }
+	}
+      while (!is_over());
+    }
+  /* CPU plays first */
+  else
+    {
+      cout<<"CPU plays first."<<endl;
+      cout<<endl;
+      do
+	{
+	  print_board();
+	  cpu_move();
+	  if (is_over())
+	    {
+	      /* CPU has won, no need for user to play */
+	      win_message = cpu_win;
+	    }
+	  else
+	    {
+	      user_move();
+	      win_message = usr_win;
+	    }
+	}
+      while (!is_over());
+    }
+  cout<<win_message<<endl;
+  cout<<endl;
+  cout<<"Thanks for playing!"<<endl;
+  cout<<endl;
 }
