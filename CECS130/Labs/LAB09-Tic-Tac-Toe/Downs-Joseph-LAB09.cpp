@@ -156,48 +156,114 @@ bool is_valid(char row, int column)
     {
       if (column == 1)
 	{
-	  
+	  if (TTT_board.A1 == 'X'|| TTT_board.A1 == 'O')
+	    {
+	      return false;
+	    }
+	  return true;
 	}
       else if (column == 2)
 	{
-	  
+	  if (TTT_board.A2 == 'X'|| TTT_board.A2 == 'O')
+	    {
+	      return false;
+	    }
+	  return true; 
 	}
       else if (column == 3)
 	{
-	  
+	  if (TTT_board.A3 == 'X'|| TTT_board.A3 == 'O')
+	    {
+	      return false;
+	    }
+	   return true;
 	}
     }
   else if (row == 'B')
     {   
       if (column == 1)
 	{
-	 
+	  if (TTT_board.B1 == 'X'|| TTT_board.B1 == 'O')
+	    {
+	      return false;
+	    }
+	  return true;
 	}
       else if (column == 2)
 	{
-	  
+	  if (TTT_board.B2 == 'X'|| TTT_board.B2 == 'O')
+	    {
+	      return false;
+	    }
+	  return true;
 	}
       else if (column == 3)
 	{
-	  
+	  if (TTT_board.B3 == 'X'|| TTT_board.B3 == 'O')
+	    {
+	      return false;
+	    }
+	  return true;
 	}
     }
   else if (row == 'C')
     {   
       if (column == 1)
 	{
-	  
+	  if (TTT_board.C1 == 'X'|| TTT_board.C1 == 'O')
+	    {
+	      return false;
+	    }
+	  return true;
 	}
       else if (column == 2)
 	{
-	
+	  if (TTT_board.C2 == 'X'|| TTT_board.C2 == 'O')
+	    {
+	      return false;
+	    }
+	  return true;
 	}
       else if (column == 3)
 	{
-	
+	  if (TTT_board.C3 == 'X'|| TTT_board.C3 == 'O')
+	    {
+	      return false;
+	    }
+	  return true;
 	}
     }
+  return false;
 }
+
+void user_move()
+{
+  char user_row;
+  int user_column;
+  cout<<"Choose a square: ";
+  cin>>user_row>>user_column;
+  if (is_valid(user_row, user_column))
+    {
+      update_board(user_row, user_column, 'X');
+      return;
+    }
+  else
+    {
+      cout<<"Not a valid move. Please try again."<<endl;
+      user_move();
+    }
+}
+
+void cpu_move()
+{
+  
+}
+
+bool is_over()
+{
+  
+}
+
 
 int main()
 {
@@ -207,6 +273,8 @@ int main()
   
   srand(time(NULL));
   int first_play = rand() % 2;
+  cout<<endl;
+  
   /* User plays first */
   if (first_play == 0)
     {
@@ -255,4 +323,5 @@ int main()
   cout<<endl;
   cout<<"Thanks for playing!"<<endl;
   cout<<endl;
+  
 }
