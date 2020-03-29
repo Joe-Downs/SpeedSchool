@@ -20,7 +20,7 @@ void update_board(char row, int column, char choice);
 void print_board();
 void user_move();
 void cpu_move();
-bool is_valid();
+bool is_valid(char row, int column);
 bool is_over();
 
 class board
@@ -148,6 +148,55 @@ void print_board()
   cout<<"C "<<C1[1]<<"|"<<C2[1]<<"|"<<C3[1]<<endl;
   cout<<"  "<<C1[2]<<"|"<<C2[2]<<"|"<<C3[2]<<endl;
   cout<<endl;
+}
+
+bool is_valid(char row, int column)
+{
+  if (row == 'A')
+    {
+      if (column == 1)
+	{
+	  
+	}
+      else if (column == 2)
+	{
+	  
+	}
+      else if (column == 3)
+	{
+	  
+	}
+    }
+  else if (row == 'B')
+    {   
+      if (column == 1)
+	{
+	 
+	}
+      else if (column == 2)
+	{
+	  
+	}
+      else if (column == 3)
+	{
+	  
+	}
+    }
+  else if (row == 'C')
+    {   
+      if (column == 1)
+	{
+	  
+	}
+      else if (column == 2)
+	{
+	
+	}
+      else if (column == 3)
+	{
+	
+	}
+    }
 }
 
 int main()
