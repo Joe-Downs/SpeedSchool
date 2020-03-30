@@ -12,6 +12,7 @@
 #include <iostream>
 #include <ctype.h>
 #include <string>
+#include <string.h>
 #include <time.h>
 
 using namespace std;
@@ -129,19 +130,19 @@ int board_plays_index(char row, int column)
 {
   int row_offset;
   int index;
-  if (column > 3)
+  if (column > 3 || column < 1 || row == ' ')
     {
       return -1;
     }
-  if (row == 'A')
+  if (row == 'A' || row == 'a')
     {
       row_offset = 0;
     }
-  else if (row == 'B')
+  else if (row == 'B' || row == 'b')
     {
       row_offset = 3;
     }
-  else if (row == 'C')
+  else if (row == 'C' || row == 'c')
     {
       row_offset = 6;
     }
@@ -187,9 +188,85 @@ void user_move()
     }
 }
 
+string cpu_plays[5];
+int cpu_plays_index = 0;
+
 void cpu_move()
 {
-  
+  int center_index = board_plays_index('B', 2);
+  char rows[6] = {' ', 'A', 'B', 'C', ' ', ' '};
+  int n;
+  int cpu_col;
+  if (is_valid(center_index))
+    {
+      update_board('B', 2, 'O');
+      TTT_board.place_piece('B', 2, 'O');
+      cpu_plays[cpu_plays_index] = "B2";
+      cpu_plays_index += 1;
+      return;
+    }
+  if (cpu_plays_index == 0)
+    {
+      update_board('A', 1, 'O');
+      TTT_board.place_piece('A', 1, 'O');
+      cpu_plays[cpu_plays_index] = "A1";
+      cpu_plays_index += 1;
+      return;
+      
+    }
+  int row_letter_index;
+  int cpu_play_index;
+  for (n=0; n < cpu_plays_index; n++)
+    {
+      if (cpu_plays[n].rfind("A") == 0)
+	{
+	  row_letter_index = 1;
+	}
+      else if (cpu_plays[n].rfind("B") == 0)
+	{
+	  row_letter_index = 2;
+	}
+      else if (cpu_plays[n].rfind("C") == 0)
+	{
+	  row_letter_index = 3;
+	}
+      if (cpu_plays[n].rfind("1") == 1)
+	{
+	  cpu_col = 1;
+	}
+      else if (cpu_plays[n].rfind("2") == 1)
+	{
+	  cpu_col = 2;
+	}
+      else if (cpu_plays[n].rfind("3") == 1)
+	{
+	  cpu_col = 3;
+	}
+      int c, r;
+      for (c = -1; c < 3; c++)
+	{
+	  int new_col = cpu_col + c;
+	  cout<<"New Col = "<<new_col<<endl;
+	  for (r = -1; r < 3; r++)
+	    {
+	      int new_row_index = row_letter_index + r;
+	      char new_row = rows[new_row_index];
+	      cpu_play_index = board_plays_index(new_row, new_col);
+	      cout<<"Checking "<<new_row<<new_col<<endl;
+	      if (is_valid(cpu_play_index))
+		{
+		  cout<<"Found match!"<<endl;
+		  update_board(new_row, new_col, 'O');
+		  TTT_board.place_piece(new_row, new_col, 'O');
+		  char new_location[3] = {new_row};
+		  new_location[1] = (char) new_col;
+		  cpu_plays[cpu_plays_index] = new_location;
+		  cpu_plays_index;
+		  return;
+		}
+	    }
+	}
+    }
 }
 
 /* Checks if two spaces have the same choice */
@@ -229,39 +306,30 @@ bool is_over()
 	{
 	  if (do_match(rows[n], i+1, rows[n], i+2))
 	    {
-	      cout<<"1"<<endl;
 	      row_matches += 1;
 	    }
-	  cout<<rows[i]<<n+1<<endl;
-	  cout<<rows[i+1]<<n+1<<endl;
 	  if (do_match(rows[i], n+1, rows[i+1], n+1))
 	    {
-	      cout<<"2"<<endl;
 	      col_matches += 1;
 	    }
 	}
       if (row_matches == 2)
 	{
-	  cout<<"3"<<endl;
 	  return true;
 	}
       if (col_matches == 2)
 	{
-	  cout<<"4"<<endl;
 	  return true;
 	}
     }
   if (do_match(rows[0], 1, rows[1], 2) && do_match(rows[1], 2, rows[2], 3))
     {
-      cout<<"5"<<endl;
       return true;
     }
   if (do_match(rows[2], 1, rows[1], 2) && do_match(rows[1], 2, rows[0], 3))
     {
-      cout<<"6"<<endl;
       return true;
     }
-  cout<<"7"<<endl;
   return false;
 }
 
@@ -305,8 +373,8 @@ int main()
       cout<<endl;
       do
 	{
-	  print_board();
 	  cpu_move();
+	  print_board();
 	  if (is_over())
 	    {
 	      /* CPU has won, no need for user to play */
