@@ -10,6 +10,7 @@
  */
 
 #include <iostream>
+#include <cstdlib>
 #include <ctype.h>
 #include <string>
 #include <time.h>
