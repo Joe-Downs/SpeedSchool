@@ -12,7 +12,6 @@
 #include <iostream>
 #include <ctype.h>
 #include <string>
-#include <string.h>
 #include <time.h>
 
 using namespace std;
@@ -40,12 +39,12 @@ public:
 
 Board TTT_board;
 
+/* Places a piece on the class instance of Board */
 void Board::place_piece(char row, int column, char choice)
 {
   int play_index = board_plays_index(row, column);
   board_plays[play_index] = choice;
 }
-
 
 /* Arrays to hold the strings used to construct the TTT board. */
 string squares[27] = {"     ", "     ", "     ",  /* A1 */
@@ -58,6 +57,7 @@ string squares[27] = {"     ", "     ", "     ",  /* A1 */
 		      "     ", "     ", "     ",  /* C2 */
 		      "     ", "     ", "     ",};/* C3 */
 
+/* Updates the 'physical' board given a row, column, and choice */
 void update_board(char row, int column, char choice)
 {
   string line1;
@@ -72,7 +72,7 @@ void update_board(char row, int column, char choice)
   else
     {
       line1 = " / \\ ";
-      line2 = " | | ";
+      line2 = " |O| ";
       line3 = " \\ / ";
     }
   int row_offset;
@@ -127,6 +127,11 @@ void print_board()
     }
   cout<<endl;
 }
+
+/* 
+ * Given a row and column, returns the index corresponding to the index of
+ * the Board class' array of squares
+ */
 int board_plays_index(char row, int column)
 {
   int row_offset;
@@ -151,7 +156,10 @@ int board_plays_index(char row, int column)
   return index;
 }
 
-
+/*
+ * Checks if the space on a board is open. TRUE if it is.
+ * Index refers to the index of the Board class' array of squares
+ */
 bool is_valid(int index)
 {
   if (index == -1)
@@ -168,6 +176,7 @@ bool is_valid(int index)
     }
 }
 
+/* Prompts user for their move and updates the boards accordingly */
 void user_move()
 {
   char user_row;
@@ -189,9 +198,15 @@ void user_move()
     }
 }
 
+/* Keeps track of where the CPU has played its pieces */
 string cpu_plays[5];
 int cpu_plays_index = 0;
 
+/* 
+ * Plays piece for the CPU. First move (if available is the center).
+ * Then, it looks around its already played spaces for other valid
+ * moves in hopes of creating a three-in-a-row.
+ */
 void cpu_move()
 {
   int center_index = board_plays_index('B', 2);
@@ -247,16 +262,13 @@ void cpu_move()
       for (c = -1; c < 3; c++)
 	{
 	  int new_col = cpu_col + c;
-	  cout<<"New Col = "<<new_col<<endl;
 	  for (r = -1; r < 3; r++)
 	    {
 	      int new_row_index = row_letter_index + r;
 	      char new_row = rows[new_row_index];
 	      cpu_play_index = board_plays_index(new_row, new_col);
-	      cout<<"Checking "<<new_row<<new_col<<endl;
 	      if (is_valid(cpu_play_index))
 		{
-		  cout<<"Found match!"<<endl;
 		  update_board(new_row, new_col, 'O');
 		  TTT_board.place_piece(new_row, new_col, 'O');
 		  char new_location[3] = {new_row};
@@ -270,15 +282,11 @@ void cpu_move()
     }
 }
 
-/* Checks if two spaces have the same choice */
+/* Checks if two spaces have the same choice. TRUE if they do. */
 bool do_match(char row1, int col1, char row2, int col2)
 {
   int index1 = board_plays_index(row1, col1);
   int index2 = board_plays_index(row2, col2);
-  /*
-  cout<<TTT_board.board_plays[index1]<<endl;
-  cout<<TTT_board.board_plays[index2]<<endl;
-  */
   if (TTT_board.board_plays[index1] == ' ' || TTT_board.board_plays[index2] == ' ')
     {
       return false;
@@ -293,6 +301,7 @@ bool do_match(char row1, int col1, char row2, int col2)
     }
 }
 
+/* Checks if the game is over. TRUE if it is */
 bool is_over()
 {
   int n, i;
@@ -337,7 +346,7 @@ bool is_over()
 /* 
  * Calls is_valid() function for each square on the board, if each is NOT
  * valid, then the board is full. If the board is full, and is_over() is 
- * FALSE, then a draw has occurred.
+ * FALSE, then a draw has occurred. Returns TRUE if there is a draw.
  */
 bool is_draw()
 {
