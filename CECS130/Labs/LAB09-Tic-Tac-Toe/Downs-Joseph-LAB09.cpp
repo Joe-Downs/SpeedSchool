@@ -25,6 +25,7 @@ void cpu_move();
 bool is_valid(char row, int column);
 bool do_match(char row1, int col1, char row2, int col2);
 bool is_over();
+bool is_draw();
 
 class Board
 {
@@ -75,15 +76,15 @@ void update_board(char row, int column, char choice)
       line3 = " \\ / ";
     }
   int row_offset;
-  if (row == 'A')
+  if (row == 'A' || row == 'a')
     {
       row_offset = 0;
     }
-  else if (row == 'B')
+  else if (row == 'B' || row == 'b')
     {
       row_offset = 9;
     }
-  else if (row == 'C')
+  else if (row == 'C' || row == 'c')
     {
       row_offset = 18;
     }
@@ -333,12 +334,30 @@ bool is_over()
   return false;
 }
 
+/* 
+ * Calls is_valid() function for each square on the board, if each is NOT
+ * valid, then the board is full. If the board is full, and is_over() is 
+ * FALSE, then a draw has occurred.
+ */
+bool is_draw()
+{
+  int n;
+  for (n=0; n < 9; n++)
+    {
+      if (is_valid(n))
+	{
+	  return false;
+	}
+    }
+  return true;
+}
 
 int main()
 {
-  string win_message;
+  string end_message;
   string usr_win = "You have won! Congratulations!";
   string cpu_win = "CPU has won. Better luck next time!";
+  string draw = "Draw. Everyone loses.";
   
   srand(time(NULL));
   int first_play = rand() % 2;
@@ -349,47 +368,49 @@ int main()
     {
       cout<<"User plays first."<<endl;
       cout<<endl;
-      do
+      while (!is_over() ^ is_draw())
 	{
 	  print_board();
 	  user_move();
-	  if (is_over())
+	  if (is_over() ^ is_draw())
 	    {
-	      /* User has won, no need for CPU to play */
-	      win_message = usr_win;
+	      /* User has won OR draw, no need for CPU to play */
+	      end_message = usr_win;
 	    }
 	  else
 	    {
 	      cpu_move();
-	      win_message = cpu_win;
+	      end_message = cpu_win;
 	    }
 	}
-      while (!is_over());
     }
   /* CPU plays first */
   else
     {
       cout<<"CPU plays first."<<endl;
       cout<<endl;
-      do
+      while (!is_over() ^ is_draw())
 	{
 	  cpu_move();
 	  print_board();
-	  if (is_over())
+	  if (is_over() ^ is_draw())  
 	    {
-	      /* CPU has won, no need for user to play */
-	      win_message = cpu_win;
+	      /* CPU has won OR draw, no need for user to play */
+	      end_message = cpu_win;
 	    }
 	  else
 	    {
 	      user_move();
-	      win_message = usr_win;
+	      end_message = usr_win;
 	    }
 	}
-      while (!is_over());
+    }
+  if (is_draw() && !is_over())
+    {
+      end_message = draw;
     }
   print_board();
-  cout<<win_message<<endl;
+  cout<<end_message<<endl;
   cout<<endl;
   cout<<"Thanks for playing!"<<endl;
   cout<<endl;
