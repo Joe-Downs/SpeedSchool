@@ -1,10 +1,11 @@
 /*
  * Joseph Downs
- * LAB 09
- * 2020.03.27
- * This programs utilzies ASCII art to display a Tic-Tac-Toe
- * board. The user plays against the computer (who goes first
- * is randomly decided before play begins). O's and X's are 
+ * LAB 10
+ * 2020.05.04
+ * This programs utilzies ASCII art to display a 3D Tic-Tac-Toe
+ * board. (Three normal TTT boards stacked on top of each other)
+ * The user plays against the computer (who goes first is
+ * randomly decided before play begins). O's and X's are 
  * 'drawn' in after each move is made. If an illegal move is
  * made, the user is informed so that they can try again.
  */
@@ -33,9 +34,11 @@ public:
   void place_piece(char row, int column, char choice);
   /* 
    * Locations for each square; can be empty, X, or O
-   * Index 0 = A1, 1 = A2, 2 = A3, and so on
+   * Index 0 = A11, 1 = A12, 2 = A3, and so on
    */
-  char board_plays[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+  char board_plays[27] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+			 ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+			 ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
 };
 
 Board TTT_board;
@@ -48,15 +51,33 @@ void Board::place_piece(char row, int column, char choice)
 }
 
 /* Arrays to hold the strings used to construct the TTT board. */
-string squares[27] = {"     ", "     ", "     ",  /* A1 */
-		      "     ", "     ", "     ",  /* A2 */
-		      "     ", "     ", "     ",  /* A3 */
-		      "     ", "     ", "     ",  /* B1 */
-		      "     ", "     ", "     ",  /* B2 */
-		      "     ", "     ", "     ",  /* B3 */
-		      "     ", "     ", "     ",  /* C1 */
-		      "     ", "     ", "     ",  /* C2 */
-		      "     ", "     ", "     ",};/* C3 */
+string squares[81] = {"     ", "     ", "     ", /* A1-1 */
+		      "     ", "     ", "     ", /* A1-2 */
+		      "     ", "     ", "     ", /* A1-3 */
+		      "     ", "     ", "     ", /* B1-1 */
+		      "     ", "     ", "     ", /* B1-2 */
+		      "     ", "     ", "     ", /* B1-3 */
+		      "     ", "     ", "     ", /* C1-1 */
+		      "     ", "     ", "     ", /* C1-2 */
+		      "     ", "     ", "     ", /* C1-3 */
+		      "     ", "     ", "     ", /* A2-1 */
+		      "     ", "     ", "     ", /* A2-2 */
+		      "     ", "     ", "     ", /* A2-3 */
+		      "     ", "     ", "     ", /* B2-1 */
+		      "     ", "     ", "     ", /* B2-2 */
+		      "     ", "     ", "     ", /* B2-3 */
+		      "     ", "     ", "     ", /* C2-1 */
+		      "     ", "     ", "     ", /* C2-2 */
+		      "     ", "     ", "     ", /* C2-3 */
+		      "     ", "     ", "     ", /* A3-1 */
+		      "     ", "     ", "     ", /* A3-2 */
+		      "     ", "     ", "     ", /* A3-3 */
+		      "     ", "     ", "     ", /* B3-1 */
+		      "     ", "     ", "     ", /* B3-2 */
+		      "     ", "     ", "     ", /* B3-3 */
+		      "     ", "     ", "     ", /* C3-1 */
+		      "     ", "     ", "     ", /* C3-2 */
+		      "     ", "     ", "     "};/* C3-3 */
 
 /* Updates the 'physical' board given a row, column, and choice */
 void update_board(char row, int column, char choice)
@@ -105,26 +126,33 @@ void print_board()
   string * blank_pointer = &row_blank;
   string * row_label[3] = {blank_pointer, letter_pointer, blank_pointer};
   cout<<endl;
-  cout<<"    1     2     3         "<<endl;
+  cout<<"       Layer 1     \t     Layer 2     \t     Layer 3"<<endl;
+  cout<<"    1     2     3  \t  1     2     3  \t  1     2     3"<<endl;
   row_letter = "A ";
   for (n = 0; n < 3; n++)
     {
       cout<<*row_label[n];
-      cout<<squares[n]<<"|"<<squares[n+3]<<"|"<<squares[n+6]<<endl;
+      cout<<squares[n]<<"|"<<squares[n+3]<<"|"<<squares[n+6]<<"\t";
+      cout<<squares[n+27]<<"|"<<squares[n+30]<<"|"<<squares[n+33]<<"\t";
+      cout<<squares[n+54]<<"|"<<squares[n+57]<<"|"<<squares[n+60]<<endl;
     }
-  cout<<"  -----+-----+-----"<<endl;
+  cout<<"  -----+-----+-----\t-----+-----+-----\t-----+-----+-----"<<endl;
   row_letter = "B ";
   for (n = 0; n < 3; n++)
     {
       cout<<*row_label[n];
-      cout<<squares[n+9]<<"|"<<squares[n+12]<<"|"<<squares[n+15]<<endl;
+      cout<<squares[n+9]<<"|"<<squares[n+12]<<"|"<<squares[n+15]<<"\t";
+      cout<<squares[n+36]<<"|"<<squares[n+39]<<"|"<<squares[n+42]<<"\t";
+      cout<<squares[n+63]<<"|"<<squares[n+66]<<"|"<<squares[n+69]<<endl;
     }
-  cout<<"  -----+-----+-----"<<endl;
+  cout<<"  -----+-----+-----\t-----+-----+-----\t-----+-----+-----"<<endl;
   row_letter = "C ";
   for (n = 0; n < 3; n++)
     {
       cout<<*row_label[n];
-      cout<<squares[n+18]<<"|"<<squares[n+21]<<"|"<<squares[n+24]<<endl;
+      cout<<squares[n+18]<<"|"<<squares[n+21]<<"|"<<squares[n+24]<<"\t";
+      cout<<squares[n+45]<<"|"<<squares[n+48]<<"|"<<squares[n+51]<<"\t";
+      cout<<squares[n+72]<<"|"<<squares[n+75]<<"|"<<squares[n+78]<<endl;
     }
   cout<<endl;
 }
