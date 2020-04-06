@@ -18,9 +18,9 @@
 
 using namespace std;
 
-void update_board(char row, int column, char choice);
+void update_board(int layer, char row, int column, char choice);
 void print_board();
-int board_plays_index(char row, int column);
+int board_plays_index(int layer, char row, int column);
 void user_move();
 void cpu_move();
 bool is_valid(char row, int column);
@@ -31,7 +31,7 @@ bool is_draw();
 class Board
 {
 public:
-  void place_piece(char row, int column, char choice);
+  void place_piece(int layer, char row, int column, char choice);
   /* 
    * Locations for each square; can be empty, X, or O
    * Index 0 = A11, 1 = A12, 2 = A3, and so on
@@ -44,9 +44,9 @@ public:
 Board TTT_board;
 
 /* Places a piece on the class instance of Board */
-void Board::place_piece(char row, int column, char choice)
+void Board::place_piece(int layer, char row, int column, char choice)
 {
-  int play_index = board_plays_index(row, column);
+  int play_index = board_plays_index(layer, row, column);
   board_plays[play_index] = choice;
 }
 
@@ -80,7 +80,7 @@ string squares[81] = {"     ", "     ", "     ", /* A1-1 */
 		      "     ", "     ", "     "};/* C3-3 */
 
 /* Updates the 'physical' board given a row, column, and choice */
-void update_board(char row, int column, char choice)
+void update_board(int layer, char row, int column, char choice)
 {
   string line1;
   string line2;
@@ -97,6 +97,7 @@ void update_board(char row, int column, char choice)
       line2 = " |O| ";
       line3 = " \\ / ";
     }
+  int layer_offset = 27 * (layer - 1);
   int row_offset;
   if (row == 'A' || row == 'a')
     {
@@ -110,7 +111,7 @@ void update_board(char row, int column, char choice)
     {
       row_offset = 18;
     }
-  int index = 3 * (column - 1) + row_offset;
+  int index = layer_offset + (3 * (column - 1)) + row_offset;
   squares[index] = line1;
   squares[index+1] = line2;
   squares[index+2] = line3;
@@ -158,11 +159,12 @@ void print_board()
 }
 
 /* 
- * Given a row and column, returns the index corresponding to the index of
- * the Board class' array of squares
+ * Given a layer, row, and column, returns the index corresponding to the
+ * index of the Board class' array of squares.
  */
-int board_plays_index(char row, int column)
+int board_plays_index(int layer, char row, int column)
 {
+  int layer_offset = 9 * (layer-1);
   int row_offset;
   int index;
   if (column > 3 || column < 1 || row == ' ')
@@ -181,7 +183,7 @@ int board_plays_index(char row, int column)
     {
       row_offset = 6;
     }
-  index = row_offset + (column - 1);
+  index = layer_offset + row_offset + (column - 1);
   return index;
 }
 
@@ -208,16 +210,19 @@ bool is_valid(int index)
 /* Prompts user for their move and updates the boards accordingly */
 void user_move()
 {
+  int user_layer;
   char user_row;
   int user_column;
   int index;
+  cout<<"Please input your choice as [Layer][Row][Column]"<<endl;
+  cout<<"e.g., 1A1 is on Layer 1, Row A, Column 1"<<endl;
   cout<<"Choose a square: ";
-  cin>>user_row>>user_column;
-  index = board_plays_index(user_row, user_column);
+  cin>>user_layer>>user_row>>user_column;
+  index = board_plays_index(user_layer, user_row, user_column);
   if (is_valid(index))
     {
-      update_board(user_row, user_column, 'X');
-      TTT_board.place_piece(user_row, user_column, 'X');
+      update_board(user_layer, user_row, user_column, 'X');
+      TTT_board.place_piece(user_layer, user_row, user_column, 'X');
       return;
     }
   else
@@ -238,22 +243,22 @@ int cpu_plays_index = 0;
  */
 void cpu_move()
 {
-  int center_index = board_plays_index('B', 2);
+  int center_index = board_plays_index(1, 'B', 2);
   char rows[6] = {' ', 'A', 'B', 'C', ' ', ' '};
   int n;
   int cpu_col;
   if (is_valid(center_index))
     {
-      update_board('B', 2, 'O');
-      TTT_board.place_piece('B', 2, 'O');
-      cpu_plays[cpu_plays_index] = "B2";
+      update_board(1, 'B', 2, 'O');
+      TTT_board.place_piece(1,'B', 2, 'O');
+      cpu_plays[cpu_plays_index] = "1B2";
       cpu_plays_index += 1;
       return;
     }
   if (cpu_plays_index == 0)
     {
-      update_board('A', 1, 'O');
-      TTT_board.place_piece('A', 1, 'O');
+      update_board(1, 'A', 1, 'O');
+      TTT_board.place_piece(1, 'A', 1, 'O');
       cpu_plays[cpu_plays_index] = "A1";
       cpu_plays_index += 1;
       return;
@@ -400,7 +405,6 @@ int main()
   srand(time(NULL));
   int first_play = rand() % 2;
   cout<<endl;
-  
   /* User plays first */
   if (first_play == 0)
     {
