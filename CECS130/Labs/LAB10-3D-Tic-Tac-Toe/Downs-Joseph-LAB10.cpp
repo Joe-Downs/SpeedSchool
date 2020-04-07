@@ -13,7 +13,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctype.h>
-#include <string>
+#include <string.h>
 #include <time.h>
 
 using namespace std;
@@ -233,7 +233,7 @@ void user_move()
 }
 
 /* Keeps track of where the CPU has played its pieces */
-string cpu_plays[5];
+char * cpu_plays[5];
 int cpu_plays_index = 0;
 
 /* 
@@ -243,73 +243,81 @@ int cpu_plays_index = 0;
  */
 void cpu_move()
 {
-  int center_index = board_plays_index(1, 'B', 2);
-  char rows[6] = {' ', 'A', 'B', 'C', ' ', ' '};
-  int n;
-  int cpu_col;
+  int center_index = board_plays_index(2, 'B', 2);
+  char new_location[4];
   if (is_valid(center_index))
     {
-      update_board(1, 'B', 2, 'O');
-      TTT_board.place_piece(1,'B', 2, 'O');
-      cpu_plays[cpu_plays_index] = "1B2";
+      new_location[0] = '2';
+      new_location[1] = 'B';
+      new_location[2] = '2';
+      update_board(2, 'B', 2, 'O');
+      TTT_board.place_piece(2,'B', 2, 'O');
+      cpu_plays[cpu_plays_index] = new_location;
       cpu_plays_index += 1;
       return;
     }
   if (cpu_plays_index == 0)
     {
+      new_location[0] = '1';
+      new_location[1] = 'A';
+      new_location[2] = '1';
       update_board(1, 'A', 1, 'O');
       TTT_board.place_piece(1, 'A', 1, 'O');
-      cpu_plays[cpu_plays_index] = "A1";
+      cpu_plays[cpu_plays_index] = new_location;
       cpu_plays_index += 1;
       return;
-      
     }
+  int n, i;
+  char rows[6] = {' ', 'A', 'B', 'C', ' ', ' '};
+  char char_nums[4] = {'0', '1', '2', '3'};
   int row_letter_index;
   int cpu_play_index;
-  for (n=0; n < cpu_plays_index; n++)
+  int cpu_col;
+  int cpu_layer;
+  for (n = 0; n < cpu_plays_index; n++)
     {
-      if (cpu_plays[n].rfind("A") == 0)
+      int c, r, l;
+      char search_term[3];
+      for (l = 1; l < 3; l++)
 	{
-	  row_letter_index = 1;
-	}
-      else if (cpu_plays[n].rfind("B") == 0)
-	{
-	  row_letter_index = 2;
-	}
-      else if (cpu_plays[n].rfind("C") == 0)
-	{
-	  row_letter_index = 3;
-	}
-      if (cpu_plays[n].rfind("1") == 1)
-	{
-	  cpu_col = 1;
-	}
-      else if (cpu_plays[n].rfind("2") == 1)
-	{
-	  cpu_col = 2;
-	}
-      else if (cpu_plays[n].rfind("3") == 1)
-	{
-	  cpu_col = 3;
-	}
-      int c, r;
-      for (c = -1; c < 3; c++)
-	{
-	  int new_col = cpu_col + c;
-	  for (r = -1; r < 3; r++)
+	  for (c = 1; c < 3; c++)
 	    {
-	      int new_row_index = row_letter_index + r;
-	      char new_row = rows[new_row_index];
-	      cpu_play_index = board_plays_index(new_row, new_col);
-	      if (is_valid(cpu_play_index))
+	      for (r = 1; r < 3; r++)
 		{
-		  update_board(new_row, new_col, 'O');
-		  TTT_board.place_piece(new_row, new_col, 'O');
-		  char new_location[3] = {new_row};
-		  new_location[1] = (char) new_col;
-		  cpu_plays[cpu_plays_index] = new_location;
-		  cpu_plays_index;
-		  return;
+		  search_term[0] = char_nums[c];
+		  search_term[1] = rows[r];
+		  search_term[2] = char_nums[c];
+		  if (strcmp(search_term, cpu_plays[n]) == 0)
+		    {
+		      cpu_layer = l;
+		      row_letter_index = r;
+		      cpu_col = c;
+		    } 
+		}
+	    }
+	}
+      for (l = -1; l <3; l++)
+	{
+	  int new_layer = cpu_layer + l;
+	  for (c = -1; c < 3; c++)
+	    {
+	      int new_col = cpu_col + c;
+	      for (r = -1; r < 3; r++)
+		{
+		  int new_row_index = row_letter_index + r;
+		  char new_row = rows[new_row_index];
+		  cpu_play_index = board_plays_index(new_layer, new_row, new_col);
+		  if (is_valid(cpu_play_index))
+		    {
+		      update_board(new_layer, new_row, new_col, 'O');
+		      TTT_board.place_piece(new_layer, new_row, new_col, 'O');
+		      new_location[0] = char_nums[new_layer];
+		      new_location[1] = new_row;
+		      new_location[2] = char_nums[new_col];
+		      cpu_plays[cpu_plays_index] = new_location;
+		      cpu_plays_index;
+		      return;
+		    }
 		}
 	    }
 	}
