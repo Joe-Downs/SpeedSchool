@@ -61,6 +61,7 @@ int playerBalance = 100;
 int handsPlayed = 0;
 int handsWon = 0;
 
+/* Takes input and calls relevant functions for the poker game to take place */
 void playPoker()
 {
   char playerResponse;
@@ -86,6 +87,7 @@ void playPoker()
     }
 }
 
+/* Takes the players desired bet */
 int takeBet()
 {
   int bet = 0;
@@ -182,6 +184,7 @@ void outcome(int bet)
   cout<<"Congratulations! You got a "<<winType<<" and made "<<bet * winMultiplier<<" USD."<<endl;
 }
 
+/* Generates report of how many hands were played, won, lost, and how much money was made */
 void generateReport()
 {
   cout<<endl;
