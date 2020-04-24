@@ -16,6 +16,7 @@
 using namespace std;
 
 void shuffleDeck();
+void playPoker();
 
 /* Card class that has a numeric value and a suit */
 class Card
@@ -51,7 +52,27 @@ void shuffleDeck()
   random_shuffle(begin(deck), end(deck));
 }
 
-int main()
+ /* Player starts with 100 USD */
+int playerBalance = 100;
+int handsPlayed = 0;
+int handsWon = 0;
+
+void playPoker()
 {
   
+}
+
+void generateReport()
+{
+  
+}
+
+int main()
+{
+  cout<<"Welcome to Poker!"<<endl;
+  cout<<"You start with $"<<playerBalance<<endl;
+  cout<<endl;
+  playPoker();
+  generateReport();
+  cout<<"Thanks for playing!"<<endl;
 }
