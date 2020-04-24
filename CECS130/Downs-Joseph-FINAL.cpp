@@ -184,7 +184,19 @@ void outcome(int bet)
 
 void generateReport()
 {
-  
+  cout<<endl;
+  cout<<"Won Hands: "<<handsWon<<endl;
+  cout<<"Lost Hands: "<<handsPlayed - handsWon<<endl;
+  cout<<"Total Hands: "<<handsPlayed<<endl;
+  cout<<"You walk away "<<abs(playerBalance - 100)<<" USD ";
+  if (playerBalance == 0)
+    {
+      cout<<"poorer."<<endl;
+    }
+  else
+    {
+      cout<<"richer."<<endl;
+    }
 }
 
 int main()
@@ -194,5 +206,6 @@ int main()
   cout<<endl;
   playPoker();
   generateReport();
+  cout<<endl;
   cout<<"Thanks for playing!"<<endl;
 }
