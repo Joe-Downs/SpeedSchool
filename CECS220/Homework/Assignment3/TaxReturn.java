@@ -11,7 +11,7 @@ public class TaxReturn
      */
     public TaxReturn(String first, String last, String address,
 		    String city, String state, String zip,
-		    String SSN, String status)
+		    String ssn, String status)
     {
 	firstName = first;
 	lastName = last;
