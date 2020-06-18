@@ -1,8 +1,8 @@
 public class TaxReturn
 {
     /* Personal info required for each tax return */
-    private string firstName, lastName, address, city, state, zipCode;
-    private string ssn, maritalStatus;
+    private String firstName, lastName, address, city, state, zipCode;
+    private String ssn, maritalStatus;
     private int income, taxesCollected, taxRate;
 
     /* 
