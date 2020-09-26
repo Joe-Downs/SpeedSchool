@@ -21,7 +21,6 @@ bool wellFormedParExp(string expr)
     { 
       if (expr[i] == '{' || expr[i] == '(' || expr[i] == '[')
 	{
-	  cout << expr[i];
 	  bracketStack.Push(expr[i]);
 	}
       else if (expr[i] == '}')
@@ -107,7 +106,6 @@ int main()
   StackType<int> stack(5);
   int numCommands;
 
-  /*
   // Prompt for file names, read file names, and prepare files
   cout << "Enter name of input command file; press return." << endl;
   cin  >> inFileName;
@@ -120,7 +118,7 @@ int main()
   cout << "Enter name of test run; press return." << endl;
   cin  >> outputLabel;
   outFile << outputLabel << endl;
-  */
+
   cout << "Enter expression to test; press return." << endl;
   cin >> inputString;
 
@@ -132,7 +130,7 @@ int main()
     {
       cout <<"Your expression is not well-formed." << endl;
     }
-  /*
+
   inFile >> command;
 
 
@@ -184,7 +182,6 @@ int main()
   cout << "Testing completed."  << endl;
   inFile.close();
   outFile.close();
-  */
   return 0;
 }
 
